@@ -1,0 +1,14 @@
+﻿admin_mode:
+    enabled: "<color=#630000>| Alpalis |</color> Włączyłeś tryb administratora."
+    disabled: "<color=#630000>| Alpalis |</color> Wyłączyłeś tryb administratora."
+    recover: "<color=#630000>| Alpalis |</color> Przywrócono tryb administratora z ostatniej sesji."
+vanish_mode:
+    enabled: "<color=#630000>| Alpalis |</color> Włączyłeś tryb niewidzialności."
+    disabled: "<color=#630000>| Alpalis |</color> Wyłączyłeś tryb niewidzialności."
+    recover: "<color=#630000>| Alpalis |</color> Przywrócono tryb niewidzialności z ostatniej sesji."
+    error_admin_mode: "<color=#630000>| Alpalis |</color> Nie możesz uruchomić trybu niewidzialności, bez trybu administratora."
+god_mode:
+    enabled: "<color=#630000>| Alpalis |</color> Włączyłeś tryb nieśmiertelności."
+    disabled: "<color=#630000>| Alpalis |</color> Wyłączyłeś tryb nieśmiertelności."
+    recover: "<color=#630000>| Alpalis |</color> Przywrócono tryb nieśmiertelności z ostatniej sesji."
+    error_admin_mode: "<color=#630000>| Alpalis |</color> Nie możesz uruchomić trybu nieśmiertelności, bez trybu administratora."
