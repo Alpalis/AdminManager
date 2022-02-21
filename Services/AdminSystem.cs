@@ -7,7 +7,6 @@ using OpenMod.API.Commands;
 using OpenMod.API.Ioc;
 using OpenMod.API.Plugins;
 using OpenMod.API.Prioritization;
-using OpenMod.Unturned.Plugins;
 using OpenMod.Unturned.Users;
 using SDG.Unturned;
 using Steamworks;
