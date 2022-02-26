@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Alpalis.AdminManager.Events
 {
-    public class IsInAdminModeEvent : IEventListener<AdminModeEvent>
+    public class OnAdminModeCheck : IEventListener<AdminModeEvent>
     {
         #region Member Variables
         private readonly IAdminSystem m_AdminSystem;
         #endregion Member Variables
 
         #region Class Constructor
-        public IsInAdminModeEvent(
+        public OnAdminModeCheck(
             IAdminSystem adminSystem)
         {
             m_AdminSystem = adminSystem;
