@@ -1,7 +1,7 @@
-﻿AdminUIID: 29007
-AdminUIKey:
+﻿MessagePrefix: true
+AdminUIID: 29007
+AdminUIKey: 7
 GodUIID: 29008
 GodUIKey: 8
 VanishUIID: 29009
 VanishUIKey: 9
-IdentityManagerImplementation: false
