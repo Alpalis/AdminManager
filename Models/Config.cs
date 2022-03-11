@@ -8,8 +8,11 @@ namespace Alpalis.AdminManager.Models
     {
         public Config()
         {
-            IdentityManagerImplementation = false;
+            MessagePrefix = true;
         }
+
+        public bool MessagePrefix { get; set; }
+
         public ushort AdminUIID { get; set; }
 
         public short AdminUIKey { get; set; }
@@ -21,7 +24,5 @@ namespace Alpalis.AdminManager.Models
         public ushort VanishUIID { get; set; }
 
         public short VanishUIKey { get; set; }
-
-        public bool IdentityManagerImplementation { get; set; }
     }
 }
