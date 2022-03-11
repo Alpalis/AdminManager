@@ -38,7 +38,7 @@ namespace Alpalis.AdminManager.Commands
         protected override async UniTask OnExecuteAsync()
         {
             if (!m_AdminSystem.IsInAdminMode(Context.Actor))
-                throw new UserFriendlyException(m_StringLocalizer["god_mode:error_adminmode"]);
+                throw new UserFriendlyException(m_StringLocalizer["god_mode:error_admin_mode"]);
             if (Context.Parameters.Length != 0) throw new CommandWrongUsageException(Context);
             UnturnedUser user = (UnturnedUser)Context.Actor;
             if (m_GodSystem.IsInGodMode(user.SteamId))

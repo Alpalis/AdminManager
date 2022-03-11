@@ -39,7 +39,7 @@ namespace Alpalis.AdminManager.Commands
         protected override async UniTask OnExecuteAsync()
         {
             if (!m_AdminSystem.IsInAdminMode(Context.Actor))
-                throw new UserFriendlyException(m_StringLocalizer["vanish_mode:error_adminmode"]);
+                throw new UserFriendlyException(m_StringLocalizer["vanish_mode:error_admin_mode"]);
             if (Context.Parameters.Length != 0) throw new CommandWrongUsageException(Context);
             UnturnedUser uPlayer = (UnturnedUser)Context.Actor;
             if (m_VanishSystem.IsInVanishMode(uPlayer.SteamId))

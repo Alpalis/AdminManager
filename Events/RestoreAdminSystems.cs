@@ -60,7 +60,7 @@ namespace Alpalis.AdminManager.Events
                     sPlayer.playerID.characterName, steamID));
                 m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIID,
                     m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIKey);
-                ChatManager.serverSendMessage(m_StringLocalizer["adminmode:recover"],
+                ChatManager.serverSendMessage(m_StringLocalizer["admin_mode:recover"],
                     Color.DarkRed.ToUnityColor(),
                     null, sPlayer, EChatMode.SAY, null, true);
             }
