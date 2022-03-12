@@ -43,31 +43,27 @@ namespace Alpalis.AdminManager.Services
         public async UniTask EnableVanishMode(SteamPlayer sPlayer)
         {
             CSteamID steamID = sPlayer.playerID.steamID;
-            if (!VanishModes.Contains(steamID.ToString()))
-            {
-                m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled VanishMode.",
-                    sPlayer.playerID.characterName, steamID));
-                VanishModes.Add(steamID.ToString());
-                m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
-                    m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey);
-                sPlayer.player.movement.canAddSimulationResultsToUpdates = false;
-            }
+            if (IsInVanishMode(steamID)) return;
+            m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled VanishMode.",
+                sPlayer.playerID.characterName, steamID));
+            VanishModes.Add(steamID.ToString());
+            m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
+                m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey);
+            sPlayer.player.movement.canAddSimulationResultsToUpdates = false;
         }
 
         public async UniTask DisableVanishMode(SteamPlayer sPlayer)
         {
             CSteamID steamID = sPlayer.playerID.steamID;
-            if (VanishModes.Contains(steamID.ToString()))
-            {
-                m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled VanishMode.",
-                    sPlayer.playerID.characterName, steamID));
-                VanishModes.Remove(steamID.ToString());
-                m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID);
-                sPlayer.player.movement.canAddSimulationResultsToUpdates = true;
-                PlayerLook look = sPlayer.player.look;
-                PlayerMovement movement = sPlayer.player.movement;
-                movement.updates.Add(new PlayerStateUpdate(movement.move, look.angle, look.rot));
-            }
+            if (!IsInVanishMode(steamID)) return;
+            m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled VanishMode.",
+                sPlayer.playerID.characterName, steamID));
+            VanishModes.Remove(steamID.ToString());
+            m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID);
+            sPlayer.player.movement.canAddSimulationResultsToUpdates = true;
+            PlayerLook look = sPlayer.player.look;
+            PlayerMovement movement = sPlayer.player.movement;
+            movement.updates.Add(new PlayerStateUpdate(movement.move, look.angle, look.rot));
         }
 
         public bool IsInVanishMode(CSteamID steamID)
