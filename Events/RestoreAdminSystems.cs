@@ -87,7 +87,6 @@ namespace Alpalis.AdminManager.Events
                     Color.DarkRed.ToUnityColor(),
                     null, sPlayer, EChatMode.SAY, null, true);
             }
-            return;
         }
     }
 }
