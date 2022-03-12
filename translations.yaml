@@ -29,18 +29,65 @@
         yourself:
             enabled: "Posiadasz włączony tryb administratora."
             disabled: "Posiadasz wyłączony tryb administratora."
-
-adminmode:
-    enabled: "<color=#630000>| Alpalis |</color> Włączyłeś tryb administratora."
-    disabled: "<color=#630000>| Alpalis |</color> Wyłączyłeś tryb administratora."
-    recover: "<color=#630000>| Alpalis |</color> Przywrócono tryb administratora z ostatniej sesji."
-vanish_mode:
-    enabled: "<color=#630000>| Alpalis |</color> Włączyłeś tryb niewidzialności."
-    disabled: "<color=#630000>| Alpalis |</color> Wyłączyłeś tryb niewidzialności."
-    recover: "<color=#630000>| Alpalis |</color> Przywrócono tryb niewidzialności z ostatniej sesji."
-    error_adminmode: "<color=#630000>| Alpalis |</color> Nie możesz uruchomić trybu niewidzialności, bez trybu administratora."
-god_mode:
-    enabled: "<color=#630000>| Alpalis |</color> Włączyłeś tryb nieśmiertelności."
-    disabled: "<color=#630000>| Alpalis |</color> Wyłączyłeś tryb nieśmiertelności."
-    recover: "<color=#630000>| Alpalis |</color> Przywrócono tryb nieśmiertelności z ostatniej sesji."
-    error_adminmode: "<color=#630000>| Alpalis |</color> Nie możesz uruchomić trybu nieśmiertelności, bez trybu administratora."
+vanish_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    switch:
+        somebody:
+            console:
+                enabled: "Konsola wyłączyła ci tryb niewidzialności."
+                disabled: "Konsola włączyła ci tryb niewidzialności."
+            player:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                enabled:  "{PlayerName} włączył ci tryb niewidzialności."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                disabled: "{PlayerName} wyłączył ci tryb niewidzialności."
+            executor:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                enabled: "Włączyłeś tryb niewidzialności graczowi {PlayerName}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                disabled: "Wyłączyłeś tryb niewidzialności graczowi {PlayerName}."
+        yourself:
+            enabled: "Włączyłeś tryb niewidzialności."
+            disabled: "Wyłączyłeś tryb niewidzialności."
+    get:
+        somebody:
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            enabled: "{PlayerName} ma włączony tryb niewidzialności."
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            disabled: "{PlayerName} ma wyłączony tryb niewidzialności."
+        yourself:
+            enabled: "Posiadasz włączony tryb niewidzialności."
+            disabled: "Posiadasz wyłączony tryb niewidzialności."
+god_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    switch:
+        somebody:
+            console:
+                enabled: "Konsola wyłączyła ci tryb nieśmiertelności."
+                disabled: "Konsola włączyła ci tryb nieśmiertelności."
+            player:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                enabled:  "{PlayerName} włączył ci tryb nieśmiertelności."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                disabled: "{PlayerName} wyłączył ci tryb nieśmiertelności."
+            executor:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                enabled: "Włączyłeś tryb nieśmiertelności graczowi {PlayerName}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                disabled: "Wyłączyłeś tryb nieśmiertelności graczowi {PlayerName}."
+        yourself:
+            enabled: "Włączyłeś tryb nieśmiertelności."
+            disabled: "Wyłączyłeś tryb nieśmiertelności."
+    get:
+        somebody:
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            enabled: "{PlayerName} ma włączony tryb nieśmiertelności."
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            disabled: "{PlayerName} ma wyłączony tryb nieśmiertelności."
+        yourself:
+            enabled: "Posiadasz włączony tryb nieśmiertelności."
+            disabled: "Posiadasz wyłączony tryb nieśmiertelności."
