@@ -43,26 +43,22 @@ namespace Alpalis.AdminManager.Services
         public async UniTask EnableGodMode(SteamPlayer sPlayer)
         {
             CSteamID steamID = sPlayer.playerID.steamID;
-            if (!GodModes.Contains(steamID.ToString()))
-            {
-                m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled GodMode.",
-                    sPlayer.playerID.characterName, steamID));
-                GodModes.Add(steamID.ToString());
-                m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
-                    m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey);
-            }
+            if (IsInGodMode(steamID)) return;
+            m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled GodMode.",
+                sPlayer.playerID.characterName, steamID));
+            GodModes.Add(steamID.ToString());
+            m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
+                m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey);
         }
 
         public async UniTask DisableGodMode(SteamPlayer sPlayer)
         {
             CSteamID steamID = sPlayer.playerID.steamID;
-            if (GodModes.Contains(steamID.ToString()))
-            {
-                m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled GodMode.",
-                    sPlayer.playerID.characterName, steamID));
-                GodModes.Remove(steamID.ToString());
-                m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID);
-            }
+            if (!IsInGodMode(steamID)) return;
+            m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled GodMode.",
+                sPlayer.playerID.characterName, steamID));
+            GodModes.Remove(steamID.ToString());
+            m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID);
         }
 
         public bool IsInGodMode(CSteamID steamID)
