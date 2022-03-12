@@ -50,7 +50,7 @@ namespace Alpalis.AdminManager.Services
         public bool ToggleAdminMode(SteamPlayer sPlayer)
         {
             CSteamID steamID = sPlayer.playerID.steamID;
-            if (AdminModes.Contains(steamID.ToString()))
+            if (IsInAdminMode(steamID))
             {
                 m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled AdminMode.",
                     sPlayer.playerID.characterName, steamID));
