@@ -99,7 +99,7 @@ namespace Alpalis.AdminManager.Commands
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? targetUser) || targetUser == null)
                     throw new UserFriendlyException(string.Format("{0}{1}",
                         config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
-                        m_StringLocalizer["adminmode_command:switch:error_player"]));
+                        m_StringLocalizer["adminmode_command:error_player"]));
                 SteamPlayer targetSPlayer = targetUser.Player.SteamPlayer;
                 CSteamID targetSteamID = targetSPlayer.playerID.steamID;
                 ushort? targetIdentity = m_IdentityManagerImplementation.GetIdentity(targetSteamID);
@@ -173,7 +173,7 @@ namespace Alpalis.AdminManager.Commands
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? user) || user == null)
                     throw new UserFriendlyException(string.Format("{0}{1}",
                         config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
-                        m_StringLocalizer["adminmode_command:switch:error_player"]));
+                        m_StringLocalizer["adminmode_command:error_player"]));
                 await UniTask.SwitchToMainThread();
                 bool result = m_AdminSystem.ToggleAdminMode(user.Player.SteamPlayer);
                 user.PrintMessageAsync(string.Format("{0} {1}", (config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : ""),
@@ -182,7 +182,7 @@ namespace Alpalis.AdminManager.Commands
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
-                PrintAsync(m_StringLocalizer[string.Format("adminmode_command:switch:somebody:executor{0}", result ? "enabled" : "disabled"), new
+                PrintAsync(m_StringLocalizer[string.Format("adminmode_command:switch:somebody:executor:{0}", result ? "enabled" : "disabled"), new
                 {
                     PlayerName = sPlayer.playerID.playerName,
                     CharacterName = sPlayer.playerID.characterName,
@@ -258,14 +258,15 @@ namespace Alpalis.AdminManager.Commands
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 bool resultTarget = m_AdminSystem.IsInAdminMode(steamID);
-                PrintAsync(m_StringLocalizer[string.Format("adminmode_command:get:somebody:{0}", resultTarget ? "enabled" : "disabled"), new
-                {
-                    PlayerName = sPlayer.playerID.playerName,
-                    CharacterName = sPlayer.playerID.characterName,
-                    NickName = sPlayer.playerID.nickName,
-                    SteamID = steamID,
-                    ID = identity
-                }]);
+                PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
+                    m_StringLocalizer[string.Format("adminmode_command:get:somebody:{0}", resultTarget ? "enabled" : "disabled"), new
+                    {
+                        PlayerName = sPlayer.playerID.playerName,
+                        CharacterName = sPlayer.playerID.characterName,
+                        NickName = sPlayer.playerID.nickName,
+                        SteamID = steamID,
+                        ID = identity
+                    }]));
             }
         }
 
