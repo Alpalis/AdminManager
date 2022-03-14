@@ -103,7 +103,7 @@ namespace Alpalis.AdminManager.Commands
                 SteamPlayer targetSPlayer = targetUser.Player.SteamPlayer;
                 CSteamID targetSteamID = targetSPlayer.playerID.steamID;
                 ushort? targetIdentity = m_IdentityManagerImplementation.GetIdentity(targetSteamID);
-                SteamPlayer sPlayer = targetUser.Player.SteamPlayer;
+                SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 await UniTask.SwitchToMainThread();
