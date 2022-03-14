@@ -91,3 +91,36 @@ god_command:
         yourself:
             enabled: "Posiadasz włączony tryb nieśmiertelności."
             disabled: "Posiadasz wyłączony tryb nieśmiertelności."
+feed_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        console: "Konsola cie nakarmiła."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        player: "{PlayerName} cie nakarmił."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        executor: "Nakarmiłeś gracza {PlayerName}."
+    yourself: "Pomyślnie się nakarmiłeś."
+drink_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        console: "Konsola cie napoiła."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        player: "{PlayerName} cie napoił."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        executor: "Napoiłeś gracza {PlayerName}."
+    yourself: "Pomyślnie się napoiłeś."
+heal_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        console: "Konsola cie uleczyła."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        player: "{PlayerName} cie uleczył."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        executor: "Uleczyłeś gracza {PlayerName}."
+    yourself: "Pomyślnie się napoiłeś."
