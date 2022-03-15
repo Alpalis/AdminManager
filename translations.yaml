@@ -123,4 +123,46 @@ heal_command:
         player: "{PlayerName} cie uleczył."
         # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
         executor: "Uleczyłeś gracza {PlayerName}."
-    yourself: "Pomyślnie się napoiłeś."
+    yourself: "Pomyślnie się uleczyłeś."
+jumpheight_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_multipler: "Podałeś niepoprawny mnożnik wysokości skoku."
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        # Placeholders: {Multipler}
+        console: "Konsola zmieniła twoją wysokość skoku na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        player: "{PlayerName} zmienił twoją wysokośc skoku na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        executor: "Zmieniłeś wysokość skoku gracza {PlayerName} na {Multipler}."
+    # Placeholders: {Multipler}
+    yourself: "Pomyślnie zmieniłeś swoją wysokość skoku na {Multipler}."
+speed_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_multipler: "Podałeś niepoprawny mnożnik prędkości."
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        # Placeholders: {Multipler}
+        console: "Konsola zmieniła twoją prędkość na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        player: "{PlayerName} zmienił twoją prędkość na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        executor: "Zmieniłeś prędkość gracza {PlayerName} na {Multipler}."
+    # Placeholders: {Multipler}
+    yourself: "Pomyślnie zmieniłeś swoją prędkość na {Multipler}."
+gravity_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_multipler: "Podałeś niepoprawny mnożnik grawitacji."
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        # Placeholders: {Multipler}
+        console: "Konsola zmieniła twoją grawitację na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        player: "{PlayerName} zmienił twoją grawitację na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        executor: "Zmieniłeś grawitację gracza {PlayerName} na {Multipler}."
+    # Placeholders: {Multipler}
+    yourself: "Pomyślnie zmieniłeś swoją grawitację na {Multipler}."
