@@ -166,3 +166,7 @@ gravity_command:
         executor: "Zmieniłeś grawitację gracza {PlayerName} na {Multipler}."
     # Placeholders: {Multipler}
     yourself: "Pomyślnie zmieniłeś swoją grawitację na {Multipler}."
+tps_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    # Placeholders: {TPS}
+    succeed: "Aktualny TPS to: {TPS}!"
