@@ -170,3 +170,29 @@ tps_command:
     prefix: "<color=#630000>| Alpalis |</color> "
     # Placeholders: {TPS}
     succeed: "Aktualny TPS to: {TPS}!"
+position_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    succeed:
+        # Placeholders: {X}, {Y}, {Z}
+        yourself: "Twoja pozycja to X={X}, Y={Y}, Z={Z}!"
+        # Placeholders: {X}, {Y}, {Z}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        somebody: "Pozycja gracza {PlayerName} to X={X}, Y={Y}, Z={Z}!"
+rotation_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    succeed:
+        # Placeholders: {X}, {Y}, {Z}, {W}
+        yourself: "Twoja rotacja to X={X}, Y={Y}, Z={Z}, W={W}!"
+        # Placeholders: {X}, {Y}, {Z}, {W}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        somebody: "Rotacja gracza {PlayerName} to X={X}, Y={Y}, Z={Z}, W={W}!"
+destroy_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_null: "Nie znaleziono żadnego obiektu przed tobą!"
+    succeed:
+        vehicle: "Pomyślnie zniszczyłeś pojazd przed tobą!"
+        barricade: "Pomyślnie zniszczyłeś barykadę przed tobą!"
+        structure: "Pomyślnie zniszczyłeś strukturę przed tobą!"
