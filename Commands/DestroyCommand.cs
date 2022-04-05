@@ -54,10 +54,13 @@ namespace Alpalis.AdminManager.Commands
                 throw new UserFriendlyException(string.Format("{0}{1}",
                      config.MessagePrefix ? m_StringLocalizer["destroy_command:prefix"] : "",
                      m_StringLocalizer["destroy_command:error_adminmode"]));
+            await UniTask.SwitchToMainThread();
             PlayerLook look = user.Player.Player.look;
             if (!PhysicsUtility.raycast(new(look.getEyesPosition(), look.aim.forward),
                 out var hit, 8f, RayMasks.BARRICADE | RayMasks.STRUCTURE | RayMasks.VEHICLE))
-                return;
+                throw new UserFriendlyException(string.Format("{0}{1}",
+                         config.MessagePrefix ? m_StringLocalizer["destroy_command:prefix"] : "",
+                         m_StringLocalizer["destroy_command:error_null"]));
             InteractableVehicle vehicle = hit.collider.GetComponent<InteractableVehicle>();
             if (vehicle != null)
             {
