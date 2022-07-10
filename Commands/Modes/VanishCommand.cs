@@ -15,19 +15,19 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 
-namespace Alpalis.AdminManager.Commands
+namespace Alpalis.AdminManager.Commands.Modes
 {
-    public class GodCommand
+    public class VanishCommand
     {
         #region Commad Parameters
-        [Command("god")]
-        [CommandSyntax("get/switch")]
-        [CommandDescription("Command to manage the god.")]
+        [Command("vanish")]
+        [CommandSyntax("<get/switch>")]
+        [CommandDescription("Command to manage the vanish.")]
         #endregion Command Parameters
-        public class God : UnturnedCommand
+        public class VanishRoot : UnturnedCommand
         {
             #region Class Constructor
-            public God(
+            public VanishRoot(
                 IServiceProvider serviceProvider) : base(serviceProvider)
             {
             }
@@ -43,15 +43,15 @@ namespace Alpalis.AdminManager.Commands
         #region Commad Parameters
         [Command("switch")]
         [CommandSyntax("[player]")]
-        [CommandDescription("Command to turn on and off the god.")]
-        [RegisterCommandPermission("other", Description = "Allows to switch god of other player.")]
+        [CommandDescription("Command to turn on and off the vanish.")]
+        [RegisterCommandPermission("other", Description = "Allows to switch vanish of other player.")]
         [CommandActor(typeof(UnturnedUser))]
-        [CommandParent(typeof(God))]
+        [CommandParent(typeof(VanishRoot))]
         #endregion Command Parameters
         public class SwitchUnturned : UnturnedCommand
         {
             #region Member Variables
-            private readonly IGodSystem m_GodSystem;
+            private readonly IVanishSystem m_VanishSystem;
             private readonly IAdminSystem m_AdminSystem;
             private readonly IStringLocalizer m_StringLocalizer;
             private readonly IConfigurationManager m_ConfigurationManager;
@@ -61,7 +61,7 @@ namespace Alpalis.AdminManager.Commands
 
             #region Class Constructor
             public SwitchUnturned(
-                IGodSystem godSystem,
+                IVanishSystem vanishSystem,
                 IAdminSystem adminSystem,
                 IStringLocalizer stringLocalizer,
                 IConfigurationManager configurationManager,
@@ -69,7 +69,7 @@ namespace Alpalis.AdminManager.Commands
                 IPluginAccessor<Main> plugin,
                 IServiceProvider serviceProvider) : base(serviceProvider)
             {
-                m_GodSystem = godSystem;
+                m_VanishSystem = vanishSystem;
                 m_AdminSystem = adminSystem;
                 m_StringLocalizer = stringLocalizer;
                 m_ConfigurationManager = configurationManager;
@@ -84,19 +84,19 @@ namespace Alpalis.AdminManager.Commands
                 UnturnedUser user = (UnturnedUser)Context.Actor;
                 if (!m_AdminSystem.IsInAdminMode(user))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                         config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
-                         m_StringLocalizer["god_command:error_adminmode"]));
+                         config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                         m_StringLocalizer["vanish_command:error_adminmode"]));
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 if (Context.Parameters.Length == 0)
                 {
-                    bool result = m_GodSystem.IsInGodMode(user.SteamId);
+                    bool result = m_VanishSystem.IsInVanishMode(user.SteamId);
                     await UniTask.SwitchToMainThread();
                     if (result)
-                        m_GodSystem.DisableGodMode(sPlayer);
+                        m_VanishSystem.DisableVanishMode(sPlayer);
                     else
-                        m_GodSystem.EnableGodMode(sPlayer);
-                    PrintAsync(string.Format("{0} {1}", (config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : ""),
-                        m_StringLocalizer[string.Format("god_command:switch:yourself:{0}",
+                        m_VanishSystem.EnableVanishMode(sPlayer);
+                    PrintAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                        m_StringLocalizer[string.Format("vanish_command:switch:yourself:{0}",
                         result ? "disabled" : "enabled")]));
                     return;
                 }
@@ -106,20 +106,20 @@ namespace Alpalis.AdminManager.Commands
                     throw new NotEnoughPermissionException(Context, "other");
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? targetUser) || targetUser == null)
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
-                        m_StringLocalizer["god_command:error_player"]));
+                        config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                        m_StringLocalizer["vanish_command:error_player"]));
                 SteamPlayer targetSPlayer = targetUser.Player.SteamPlayer;
                 CSteamID targetSteamID = targetSPlayer.playerID.steamID;
                 ushort? targetIdentity = m_IdentityManagerImplementation.GetIdentity(targetSteamID);
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(user.SteamId);
-                bool targetResult = m_GodSystem.IsInGodMode(targetSteamID);
+                bool targetResult = m_VanishSystem.IsInVanishMode(targetSteamID);
                 await UniTask.SwitchToMainThread();
                 if (targetResult)
-                    m_GodSystem.DisableGodMode(targetSPlayer);
+                    m_VanishSystem.DisableVanishMode(targetSPlayer);
                 else
-                    m_GodSystem.EnableGodMode(targetSPlayer);
-                targetUser.PrintMessageAsync(string.Format("{0} {1}", (config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : ""),
-                    m_StringLocalizer[string.Format("god_command:switch:somebody:player:{0}",
+                    m_VanishSystem.EnableVanishMode(targetSPlayer);
+                targetUser.PrintMessageAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                    m_StringLocalizer[string.Format("vanish_command:switch:somebody:player:{0}",
                     targetResult ? "disabled" : "enabled"), new
                     {
                         PlayerName = sPlayer.playerID.playerName,
@@ -128,8 +128,8 @@ namespace Alpalis.AdminManager.Commands
                         SteamID = user.SteamId,
                         ID = identity
                     }]));
-                PrintAsync(string.Format("{0} {1}", (config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : ""),
-                    m_StringLocalizer[string.Format("god_command:switch:somebody:executor:{0}",
+                PrintAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
+                    m_StringLocalizer[string.Format("vanish_command:switch:somebody:executor:{0}",
                     targetResult ? "disabled" : "enabled"), new
                     {
                         PlayerName = targetSPlayer.playerID.playerName,
@@ -144,14 +144,14 @@ namespace Alpalis.AdminManager.Commands
         #region Commad Parameters
         [Command("switch")]
         [CommandSyntax("<player>")]
-        [CommandDescription("Command to turn on and off the god.")]
+        [CommandDescription("Command to turn on and off the vanish.")]
         [CommandActor(typeof(ConsoleActor))]
-        [CommandParent(typeof(God))]
+        [CommandParent(typeof(VanishRoot))]
         #endregion Command Parameters
         public class SwitchConsole : UnturnedCommand
         {
             #region Member Variables
-            private readonly IGodSystem m_GodSystem;
+            private readonly IVanishSystem m_VanishSystem;
             private readonly IStringLocalizer m_StringLocalizer;
             private readonly IConfigurationManager m_ConfigurationManager;
             private readonly IIdentityManagerImplementation m_IdentityManagerImplementation;
@@ -160,14 +160,14 @@ namespace Alpalis.AdminManager.Commands
 
             #region Class Constructor
             public SwitchConsole(
-                IGodSystem godSystem,
+                IVanishSystem vanishSystem,
                 IStringLocalizer stringLocalizer,
                 IConfigurationManager configurationManager,
                 IIdentityManagerImplementation identityManagerImplementation,
                 IPluginAccessor<Main> plugin,
                 IServiceProvider serviceProvider) : base(serviceProvider)
             {
-                m_GodSystem = godSystem;
+                m_VanishSystem = vanishSystem;
                 m_StringLocalizer = stringLocalizer;
                 m_ConfigurationManager = configurationManager;
                 m_IdentityManagerImplementation = identityManagerImplementation;
@@ -182,21 +182,21 @@ namespace Alpalis.AdminManager.Commands
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? user) || user == null)
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
-                        m_StringLocalizer["god_command:error_player"]));
+                        config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                        m_StringLocalizer["vanish_command:error_player"]));
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
-                bool result = m_GodSystem.IsInGodMode(user.SteamId);
+                bool result = m_VanishSystem.IsInVanishMode(user.SteamId);
                 await UniTask.SwitchToMainThread();
                 if (result)
-                    m_GodSystem.DisableGodMode(sPlayer);
+                    m_VanishSystem.DisableVanishMode(sPlayer);
                 else
-                    m_GodSystem.EnableGodMode(sPlayer);
-                user.PrintMessageAsync(string.Format("{0} {1}", (config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : ""),
-                    m_StringLocalizer[string.Format("god_command:switch:somebody:console:{0}",
+                    m_VanishSystem.EnableVanishMode(sPlayer);
+                user.PrintMessageAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                    m_StringLocalizer[string.Format("vanish_command:switch:somebody:console:{0}",
                     result ? "disabled" : "enabled")]));
-                PrintAsync(m_StringLocalizer[string.Format("god_command:switch:somebody:executor{0}", result ? "disabled" : "enabled"), new
+                PrintAsync(m_StringLocalizer[string.Format("vanish_command:switch:somebody:executor{0}", result ? "disabled" : "enabled"), new
                 {
                     PlayerName = sPlayer.playerID.playerName,
                     CharacterName = sPlayer.playerID.characterName,
@@ -212,17 +212,17 @@ namespace Alpalis.AdminManager.Commands
         #region Commad Parameters
         [Command("get")]
         [CommandSyntax("[player]")]
-        [CommandDescription("Command to get state of your or player's god.")]
-        [RegisterCommandPermission("other", Description = "Allows to get god state of other player.")]
+        [CommandDescription("Command to get state of your or player's vanish.")]
+        [RegisterCommandPermission("other", Description = "Allows to get vanish state of other player.")]
         [CommandActor(typeof(UnturnedUser))]
-        [CommandParent(typeof(God))]
+        [CommandParent(typeof(VanishRoot))]
         #endregion Command Parameters
         public class GetUnturned : UnturnedCommand
         {
             #region Member Variables
             private readonly IAdminSystem m_AdminSystem;
             private readonly IConfigurationManager m_ConfigurationManager;
-            private readonly IGodSystem m_GodSystem;
+            private readonly IVanishSystem m_VanishSystem;
             private readonly IStringLocalizer m_StringLocalizer;
             private readonly IIdentityManagerImplementation m_IdentityManagerImplementation;
             private readonly Main m_Plugin;
@@ -232,7 +232,7 @@ namespace Alpalis.AdminManager.Commands
             public GetUnturned(
                 IAdminSystem adminSystem,
                 IConfigurationManager configurationManager,
-                IGodSystem godSystem,
+                IVanishSystem vanishSystem,
                 IStringLocalizer stringLocalizer,
                 IIdentityManagerImplementation identityManagerImplementation,
                 IPluginAccessor<Main> plugin,
@@ -240,7 +240,7 @@ namespace Alpalis.AdminManager.Commands
             {
                 m_AdminSystem = adminSystem;
                 m_ConfigurationManager = configurationManager;
-                m_GodSystem = godSystem;
+                m_VanishSystem = vanishSystem;
                 m_StringLocalizer = stringLocalizer;
                 m_IdentityManagerImplementation = identityManagerImplementation;
                 m_Plugin = plugin.Instance!;
@@ -253,14 +253,14 @@ namespace Alpalis.AdminManager.Commands
                 UnturnedUser user = (UnturnedUser)Context.Actor;
                 if (!m_AdminSystem.IsInAdminMode(user))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                         config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
-                         m_StringLocalizer["god_command:error_adminmode"]));
+                         config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                         m_StringLocalizer["vanish_command:error_adminmode"]));
                 if (Context.Parameters.Length == 0)
                 {
                     PrintAsync(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
-                        m_StringLocalizer[string.Format("god_command:get:yourself:{0}",
-                        m_GodSystem.IsInGodMode(user.SteamId) ? "enabled" : "disabled")]));
+                        config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                        m_StringLocalizer[string.Format("vanish_command:get:yourself:{0}",
+                        m_VanishSystem.IsInVanishMode(user.SteamId) ? "enabled" : "disabled")]));
                     return;
                 }
                 if (Context.Parameters.Length != 1)
@@ -269,14 +269,14 @@ namespace Alpalis.AdminManager.Commands
                     throw new NotEnoughPermissionException(Context, "other");
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? targetUser) || targetUser == null)
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
-                        m_StringLocalizer["god_command:error_player"]));
+                        config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                        m_StringLocalizer["vanish_command:error_player"]));
                 SteamPlayer sPlayer = targetUser.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
-                PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
-                    m_StringLocalizer[string.Format("god_command:get:somebody:{0}",
-                    m_GodSystem.IsInGodMode(steamID) ? "enabled" : "disabled"), new
+                PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["vanish_command:prefix"] : "",
+                    m_StringLocalizer[string.Format("vanish_command:get:somebody:{0}",
+                    m_VanishSystem.IsInVanishMode(steamID) ? "enabled" : "disabled"), new
                     {
                         PlayerName = sPlayer.playerID.playerName,
                         CharacterName = sPlayer.playerID.characterName,
@@ -290,26 +290,26 @@ namespace Alpalis.AdminManager.Commands
         #region Commad Parameters
         [Command("get")]
         [CommandSyntax("<player>")]
-        [CommandDescription("Command to get state of player's god.")]
+        [CommandDescription("Command to get state of player's vanish.")]
         [CommandActor(typeof(ConsoleActor))]
-        [CommandParent(typeof(God))]
+        [CommandParent(typeof(VanishRoot))]
         #endregion Command Parameters
         public class GetConsole : UnturnedCommand
         {
             #region Member Variables
-            private readonly IGodSystem m_GodSystem;
+            private readonly IVanishSystem m_VanishSystem;
             private readonly IStringLocalizer m_StringLocalizer;
             private readonly IIdentityManagerImplementation m_IdentityManagerImplementation;
             #endregion Member Variables
 
             #region Class Constructor
             public GetConsole(
-                IGodSystem godSystem,
+                IVanishSystem vanishSystem,
                 IStringLocalizer stringLocalizer,
                 IIdentityManagerImplementation identityManagerImplementation,
                 IServiceProvider serviceProvider) : base(serviceProvider)
             {
-                m_GodSystem = godSystem;
+                m_VanishSystem = vanishSystem;
                 m_StringLocalizer = stringLocalizer;
                 m_IdentityManagerImplementation = identityManagerImplementation;
             }
@@ -320,12 +320,12 @@ namespace Alpalis.AdminManager.Commands
                 if (Context.Parameters.Length != 1)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? user) || user == null)
-                    throw new UserFriendlyException(m_StringLocalizer["god_command:error_player"]);
+                    throw new UserFriendlyException(m_StringLocalizer["vanish_command:error_player"]);
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
-                bool result = m_GodSystem.IsInGodMode(steamID);
-                PrintAsync(m_StringLocalizer[string.Format("god_command:get:somebody:{0}", result ? "enabled" : "disabled"), new
+                bool result = m_VanishSystem.IsInVanishMode(steamID);
+                PrintAsync(m_StringLocalizer[string.Format("vanish_command:get:somebody:{0}", result ? "enabled" : "disabled"), new
                 {
                     PlayerName = sPlayer.playerID.playerName,
                     CharacterName = sPlayer.playerID.characterName,

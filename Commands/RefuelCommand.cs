@@ -65,7 +65,7 @@ namespace Alpalis.AdminManager.Commands
                 return;
             }
             PlayerLook look = user.Player.Player.look;
-            RaycastInfo raycast = DamageTool.raycast(new(look.getEyesPosition(), look.aim.forward), 8f, RayMasks.DAMAGE_SERVER);
+            RaycastInfo raycast = DamageTool.raycast(new(look.aim.position, look.aim.forward), 8f, RayMasks.DAMAGE_SERVER | RayMasks.VEHICLE);
             if (raycast.vehicle != null)
             {
                 if (!RefuelVehicle(raycast.vehicle))

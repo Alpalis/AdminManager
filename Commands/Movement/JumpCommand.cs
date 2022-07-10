@@ -60,7 +60,7 @@ namespace Alpalis.AdminManager.Commands.Movement
             if (!PhysicsUtility.raycast(new Ray(aim.position, aim.forward), out RaycastHit hit, 1024f, COLLISION_NO_SKY))
                 throw new UserFriendlyException(string.Format("{0}{1}",
                      config.MessagePrefix ? m_StringLocalizer["jump_command:prefix"] : "",
-                     m_StringLocalizer["jump_command:none"]));
+                     m_StringLocalizer["jump_command:error_null"]));
             await user.Player.Player.TeleportToLocationUnsafeAsync(hit.point + new Vector3(0f, 2f, 0f));
             PrintAsync(string.Format("{0}{1}",
                      config.MessagePrefix ? m_StringLocalizer["jump_command:prefix"] : "",

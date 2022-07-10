@@ -7,6 +7,7 @@ using OpenMod.API.Commands;
 using OpenMod.API.Permissions;
 using OpenMod.API.Plugins;
 using OpenMod.Core.Commands;
+using OpenMod.Core.Console;
 using OpenMod.Core.Permissions;
 using OpenMod.Unturned.Commands;
 using OpenMod.Unturned.Users;
@@ -16,16 +17,16 @@ using System;
 
 namespace Alpalis.AdminManager.Commands.Life
 {
-    public class FeedCommand
+    public class VirusCommand
     {
         #region Command Parameters
-        [Command("feed")]
+        [Command("virus")]
         [CommandSyntax("[player]")]
-        [CommandDescription("Command to feed yourself and other players.")]
-        [RegisterCommandPermission("other", Description = "Allows to feed other player.")]
+        [CommandDescription("Command to set virus for yourself and other players.")]
+        [RegisterCommandPermission("other", Description = "Allows to set virus of other player.")]
         [CommandActor(typeof(UnturnedUser))]
         #endregion Command Parameters
-        public class FeedUnturned : UnturnedCommand
+        public class VirusUnturned : UnturnedCommand
         {
             #region Member Variables
             private readonly IAdminSystem m_AdminSystem;
@@ -36,7 +37,7 @@ namespace Alpalis.AdminManager.Commands.Life
             #endregion Member Variables
 
             #region Class Constructor
-            public FeedUnturned(
+            public VirusUnturned(
                 IAdminSystem adminSystem,
                 IIdentityManagerImplementation identityManagerImplementation,
                 IStringLocalizer stringLocalizer,
@@ -58,15 +59,15 @@ namespace Alpalis.AdminManager.Commands.Life
                 UnturnedUser user = (UnturnedUser)Context.Actor;
                 if (!m_AdminSystem.IsInAdminMode(user))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                         config.MessagePrefix ? m_StringLocalizer["feed_command:prefix"] : "",
-                         m_StringLocalizer["feed_command:error_adminmode"]));
+                         config.MessagePrefix ? m_StringLocalizer["virus_command:prefix"] : "",
+                         m_StringLocalizer["virus_command:error_adminmode"]));
                 if (Context.Parameters.Count == 0)
                 {
                     await UniTask.SwitchToMainThread();
-                    user.Player.Player.life.serverModifyHealth(100);
+                    user.Player.Player.life.serverModifyVirus(100);
                     PrintAsync(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["feed_command:prefix"] : "",
-                        m_StringLocalizer["feed_command:yourself"]));
+                        config.MessagePrefix ? m_StringLocalizer["virus_command:prefix"] : "",
+                        m_StringLocalizer["virus_command:yourself"]));
                     return;
                 }
                 if (Context.Parameters.Count != 1)
@@ -75,8 +76,8 @@ namespace Alpalis.AdminManager.Commands.Life
                     throw new NotEnoughPermissionException(Context, "other");
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? targetUser) || targetUser == null)
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["feed_command:prefix"] : "",
-                        m_StringLocalizer["feed_command:error_player"]));
+                        config.MessagePrefix ? m_StringLocalizer["virus_command:prefix"] : "",
+                        m_StringLocalizer["virus_command:error_player"]));
                 SteamPlayer targetSPlayer = targetUser.Player.SteamPlayer;
                 CSteamID targetSteamID = targetSPlayer.playerID.steamID;
                 ushort? targetIdentity = m_IdentityManagerImplementation.GetIdentity(targetSteamID);
@@ -86,8 +87,8 @@ namespace Alpalis.AdminManager.Commands.Life
                 await UniTask.SwitchToMainThread();
                 targetUser.Player.Player.life.serverModifyFood(100);
                 targetUser.PrintMessageAsync(string.Format("{0}{1}",
-                    config.MessagePrefix ? m_StringLocalizer["feed_command:prefix"] : "",
-                    m_StringLocalizer["feed_command:somebody:player", new
+                    config.MessagePrefix ? m_StringLocalizer["virus_command:prefix"] : "",
+                    m_StringLocalizer["virus_command:somebody:player", new
                     {
                         PlayerName = sPlayer.playerID.playerName,
                         CharacterName = sPlayer.playerID.characterName,
@@ -96,8 +97,8 @@ namespace Alpalis.AdminManager.Commands.Life
                         ID = identity
                     }]));
                 PrintAsync(string.Format("{0}{1}",
-                    config.MessagePrefix ? m_StringLocalizer["feed_command:prefix"] : "",
-                    m_StringLocalizer["feed_command:somebody:executor", new
+                    config.MessagePrefix ? m_StringLocalizer["virus_command:prefix"] : "",
+                    m_StringLocalizer["virus_command:somebody:executor", new
                     {
                         PlayerName = targetSPlayer.playerID.playerName,
                         CharacterName = targetSPlayer.playerID.characterName,
@@ -109,12 +110,12 @@ namespace Alpalis.AdminManager.Commands.Life
         }
 
         #region Command Parameters
-        [Command("heal")]
+        [Command("virus")]
         [CommandSyntax("<player>")]
-        [CommandDescription("Command to feed other players.")]
-        [CommandActor(typeof(UnturnedUser))]
+        [CommandDescription("Command to set virus of other players.")]
+        [CommandActor(typeof(ConsoleActor))]
         #endregion Command Parameters
-        public class FeedConsole : UnturnedCommand
+        public class VirusConsole : UnturnedCommand
         {
             #region Member Variables
             private readonly IIdentityManagerImplementation m_IdentityManagerImplementation;
@@ -124,7 +125,7 @@ namespace Alpalis.AdminManager.Commands.Life
             #endregion Member Variables
 
             #region Class Constructor
-            public FeedConsole(
+            public VirusConsole(
                 IIdentityManagerImplementation identityManagerImplementation,
                 IStringLocalizer stringLocalizer,
                 IConfigurationManager configurationManager,
@@ -144,18 +145,16 @@ namespace Alpalis.AdminManager.Commands.Life
                 if (Context.Parameters.Count != 1)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? user) || user == null)
-                    throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["feed_command:prefix"] : "",
-                        m_StringLocalizer["feed_command:error_player"]));
+                    throw new UserFriendlyException(m_StringLocalizer["virus_command:error_player"]);
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 await UniTask.SwitchToMainThread();
-                user.Player.Player.life.serverModifyFood(100);
+                user.Player.Player.life.serverModifyVirus(100);
                 user.PrintMessageAsync(string.Format("{0}{1}",
-                    config.MessagePrefix ? m_StringLocalizer["feed_command:prefix"] : "",
-                    m_StringLocalizer["feed_command:somebody:console"]));
-                PrintAsync(m_StringLocalizer["feed_command:somebody:executor", new
+                    config.MessagePrefix ? m_StringLocalizer["virus_command:prefix"] : "",
+                    m_StringLocalizer["virus_command:somebody:console"]));
+                PrintAsync(m_StringLocalizer["virus_command:somebody:executor", new
                 {
                     PlayerName = sPlayer.playerID.playerName,
                     CharacterName = sPlayer.playerID.characterName,

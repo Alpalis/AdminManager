@@ -1,12 +1,14 @@
 ﻿using Alpalis.AdminManager.API;
 using Alpalis.AdminManager.Models;
 using Alpalis.UtilityServices.API;
+using Cysharp.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenMod.API.Commands;
 using OpenMod.API.Ioc;
 using OpenMod.API.Plugins;
 using OpenMod.API.Prioritization;
+using OpenMod.Core.Helpers;
 using OpenMod.Unturned.Users;
 using SDG.Unturned;
 using Steamworks;
@@ -45,7 +47,7 @@ namespace Alpalis.AdminManager.Services
         }
         #endregion Class Constructor
 
-        private HashSet<string> AdminModes { get; set; }
+        private HashSet<ulong> AdminModes { get; set; }
 
         public bool ToggleAdminMode(SteamPlayer sPlayer)
         {
@@ -56,21 +58,22 @@ namespace Alpalis.AdminManager.Services
                     sPlayer.playerID.characterName, steamID));
                 m_GodSystem.DisableGodMode(sPlayer);
                 m_VanishSystem.DisableVanishMode(sPlayer);
-                m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIID);
-                AdminModes.Remove(steamID.ToString());
+                m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIID,
+                    m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIKey, "AdminMode", 750);
+                AdminModes.Remove(steamID.m_SteamID);
                 return false;
             }
             m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled AdminMode.",
                 sPlayer.playerID.characterName, steamID));
             m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIID,
                 m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIKey);
-            AdminModes.Add(steamID.ToString());
+            AdminModes.Add(steamID.m_SteamID);
             return true;
         }
 
         public bool IsInAdminMode(CSteamID steamID)
         {
-            if (AdminModes.Contains(steamID.ToString()))
+            if (AdminModes.Contains(steamID.m_SteamID))
                 return true;
             return false;
         }

@@ -34,6 +34,7 @@ namespace Alpalis.AdminManager.Commands.Movement
             private readonly IAdminSystem m_AdminSystem;
             private readonly IStringLocalizer m_StringLocalizer;
             private readonly Main m_Plugin;
+            private readonly IFlySystem m_FlySystem;
             #endregion Member Variables
 
             #region Class Constructor
@@ -43,6 +44,7 @@ namespace Alpalis.AdminManager.Commands.Movement
                 IAdminSystem adminSystem,
                 IStringLocalizer stringLocalizer,
                 IPluginAccessor<Main> plugin,
+                IFlySystem flySystem,
                 IServiceProvider serviceProvider) : base(serviceProvider)
             {
                 m_IdentityManagerImplementation = identityManagerImplementation;
@@ -50,6 +52,7 @@ namespace Alpalis.AdminManager.Commands.Movement
                 m_AdminSystem = adminSystem;
                 m_StringLocalizer = stringLocalizer;
                 m_Plugin = plugin.Instance!;
+                m_FlySystem = flySystem;
             }
             #endregion Class Constructor
 
@@ -61,7 +64,7 @@ namespace Alpalis.AdminManager.Commands.Movement
                     throw new UserFriendlyException(string.Format("{0}{1}",
                          config.MessagePrefix ? m_StringLocalizer["gravity_command:prefix"] : "",
                          m_StringLocalizer["gravity_command:error_adminmode"]));
-                if (Context.Parameters.Count == 1 || Context.Parameters.Count == 2)
+                if (Context.Parameters.Count != 1 && Context.Parameters.Count != 2)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out float multipler))
                     throw new UserFriendlyException(string.Format("{0}{1}",
@@ -69,6 +72,10 @@ namespace Alpalis.AdminManager.Commands.Movement
                         m_StringLocalizer["gravity_command:error_multipler"]));
                 if (Context.Parameters.Count == 1)
                 {
+                    if (m_FlySystem.IsInFlyMode(user.SteamId))
+                        throw new UserFriendlyException(string.Format("{0}{1}",
+                            config.MessagePrefix ? m_StringLocalizer["gravity_command:prefix"] : "",
+                            m_StringLocalizer["gravity_command:error_flymode:yourself"]));
                     await UniTask.SwitchToMainThread();
                     user.Player.Player.movement.sendPluginGravityMultiplier(multipler);
                     PrintAsync(string.Format("{0}{1}",
@@ -82,6 +89,10 @@ namespace Alpalis.AdminManager.Commands.Movement
                     throw new UserFriendlyException(string.Format("{0}{1}",
                         config.MessagePrefix ? m_StringLocalizer["gravity_command:prefix"] : "",
                         m_StringLocalizer["gravity_command:error_player"]));
+                if (m_FlySystem.IsInFlyMode(targetUser.SteamId))
+                    throw new UserFriendlyException(string.Format("{0}{1}",
+                        config.MessagePrefix ? m_StringLocalizer["gravity_command:prefix"] : "",
+                        m_StringLocalizer["gravity_command:error_flymode:somebody"]));
                 SteamPlayer targetSPlayer = targetUser.Player.SteamPlayer;
                 CSteamID targetSteamID = targetSPlayer.playerID.steamID;
                 ushort? targetIdentity = m_IdentityManagerImplementation.GetIdentity(targetSteamID);
@@ -127,6 +138,7 @@ namespace Alpalis.AdminManager.Commands.Movement
             private readonly IIdentityManagerImplementation m_IdentityManagerImplementation;
             private readonly IConfigurationManager m_ConfigurationManager;
             private readonly IStringLocalizer m_StringLocalizer;
+            private readonly IFlySystem m_FlySystem;
             private readonly Main m_Plugin;
             #endregion Member Variables
 
@@ -136,28 +148,28 @@ namespace Alpalis.AdminManager.Commands.Movement
                 IConfigurationManager configurationManager,
                 IStringLocalizer stringLocalizer,
                 IPluginAccessor<Main> plugin,
+                IFlySystem flySystem,
                 IServiceProvider serviceProvider) : base(serviceProvider)
             {
                 m_IdentityManagerImplementation = identityManagerImplementation;
                 m_ConfigurationManager = configurationManager;
                 m_StringLocalizer = stringLocalizer;
                 m_Plugin = plugin.Instance!;
+                m_FlySystem = flySystem;
             }
             #endregion Class Constructor
 
             protected override async UniTask OnExecuteAsync()
             {
                 Config config = m_ConfigurationManager.GetConfig<Config>(m_Plugin);
-                if (Context.Parameters.Count == 2)
+                if (Context.Parameters.Count != 2)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out float multipler))
-                    throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["gravity_command:prefix"] : "",
-                        m_StringLocalizer["gravity_command:error_multipler"]));
+                    throw new UserFriendlyException(m_StringLocalizer["gravity_command:error_multipler"]);
                 if (!Context.Parameters.TryGet(1, out UnturnedUser? user) || user == null)
-                    throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["gravity_command:prefix"] : "",
-                        m_StringLocalizer["gravity_command:error_player"]));
+                    throw new UserFriendlyException(m_StringLocalizer["gravity_command:error_player"]);
+                if (m_FlySystem.IsInFlyMode(user.SteamId))
+                    throw new UserFriendlyException(m_StringLocalizer["gravity_command:error_flymode:somebody"]);
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);

@@ -15,19 +15,19 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 
-namespace Alpalis.AdminManager.Commands
+namespace Alpalis.AdminManager.Commands.Modes
 {
     public class AdminModeCommand
     {
         #region Commad Parameters
         [Command("adminmode")]
-        [CommandSyntax("get/switch")]
+        [CommandSyntax("<get/switch>")]
         [CommandDescription("Command to manage the admin mode.")]
         #endregion Command Parameters
-        public class AdminMode : UnturnedCommand
+        public class AdminModeRoot : UnturnedCommand
         {
             #region Class Constructor
-            public AdminMode(
+            public AdminModeRoot(
                 IServiceProvider serviceProvider) : base(serviceProvider)
             {
             }
@@ -43,11 +43,11 @@ namespace Alpalis.AdminManager.Commands
         #region Switch
         #region Commad Parameters
         [Command("switch")]
-        [CommandSyntax("[steamID]")]
+        [CommandSyntax("[player]")]
         [CommandDescription("Command to turn on and off the admin mode.")]
         [RegisterCommandPermission("other", Description = "Allows to switch admin mode of other player.")]
         [CommandActor(typeof(UnturnedUser))]
-        [CommandParent(typeof(AdminMode))]
+        [CommandParent(typeof(AdminModeRoot))]
         #endregion Command Parameters
         public class SwitchUnturned : UnturnedCommand
         {
@@ -83,7 +83,7 @@ namespace Alpalis.AdminManager.Commands
                 if (Context.Parameters.Count == 0)
                 {
                     await UniTask.SwitchToMainThread();
-                    PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : ""),
+                    PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
                         m_StringLocalizer[string.Format("adminmode_command:switch:yourself:{0}",
                         m_AdminSystem.ToggleAdminMode(user.Player.SteamPlayer) ? "enabled" : "disabled")]));
                     return;
@@ -108,7 +108,7 @@ namespace Alpalis.AdminManager.Commands
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 await UniTask.SwitchToMainThread();
                 bool result = m_AdminSystem.ToggleAdminMode(targetUser.Player.SteamPlayer);
-                targetUser.PrintMessageAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : ""),
+                targetUser.PrintMessageAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
                     m_StringLocalizer[string.Format("adminmode_command:switch:somebody:player:{0}",
                     result ? "enabled" : "disabled"), new
                     {
@@ -118,7 +118,7 @@ namespace Alpalis.AdminManager.Commands
                         SteamID = steamID,
                         ID = identity
                     }]));
-                PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : ""),
+                PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
                     m_StringLocalizer[string.Format("adminmode_command:switch:somebody:executor:{0}",
                     result ? "enabled" : "disabled"), new
                     {
@@ -136,7 +136,7 @@ namespace Alpalis.AdminManager.Commands
         [CommandSyntax("<player>")]
         [CommandDescription("Command to turn on and off the admin mode.")]
         [CommandActor(typeof(ConsoleActor))]
-        [CommandParent(typeof(AdminMode))]
+        [CommandParent(typeof(AdminModeRoot))]
         #endregion Command Parameters
         public class SwitchConsole : UnturnedCommand
         {
@@ -176,7 +176,7 @@ namespace Alpalis.AdminManager.Commands
                         m_StringLocalizer["adminmode_command:error_player"]));
                 await UniTask.SwitchToMainThread();
                 bool result = m_AdminSystem.ToggleAdminMode(user.Player.SteamPlayer);
-                user.PrintMessageAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : ""),
+                user.PrintMessageAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["adminmode_command:prefix"] : "",
                     m_StringLocalizer[string.Format("adminmode_command:switch:somebody:console:{0}",
                     result ? "enabled" : "disabled")]));
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
@@ -201,7 +201,7 @@ namespace Alpalis.AdminManager.Commands
         [CommandDescription("Command to get state of your or player's admin mode.")]
         [RegisterCommandPermission("other", Description = "Allows to get admin mode of other player.")]
         [CommandActor(typeof(UnturnedUser))]
-        [CommandParent(typeof(AdminMode))]
+        [CommandParent(typeof(AdminModeRoot))]
         #endregion Command Parameters
         public class GetUnturned : UnturnedCommand
         {
@@ -275,7 +275,7 @@ namespace Alpalis.AdminManager.Commands
         [CommandSyntax("<player>")]
         [CommandDescription("Command to get state of player's admin mode.")]
         [CommandActor(typeof(ConsoleActor))]
-        [CommandParent(typeof(AdminMode))]
+        [CommandParent(typeof(AdminModeRoot))]
         #endregion Command Parameters
         public class GetConsole : UnturnedCommand
         {

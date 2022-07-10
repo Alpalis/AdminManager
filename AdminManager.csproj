@@ -8,9 +8,9 @@
 		<GenerateNugetPackage>true</GenerateNugetPackage>
 		<Product>Alpalis AdminManager Plugin</Product>
 		<Authors>Pandetthe</Authors>
-		<Version>0.1.0</Version>
-		<InformationalVersion>0.1.0</InformationalVersion>
-		<PackageVersion>0.1.0</PackageVersion>
+		<Version>0.1.1</Version>
+		<InformationalVersion>0.1.1</InformationalVersion>
+		<PackageVersion>0.1.1</PackageVersion>
 		<AssemblyName>Alpalis.AdminManager</AssemblyName>
 	</PropertyGroup>
 
@@ -25,4 +25,8 @@
 	</ItemGroup>
 
 	<Import Project="..\shared.csproj" />
+
+	<ItemGroup>
+	  <PackageReference Update="OpenMod.Unturned" Version="3.3.0" />
+	</ItemGroup>
 </Project>

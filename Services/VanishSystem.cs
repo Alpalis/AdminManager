@@ -38,7 +38,7 @@ namespace Alpalis.AdminManager.Services
         }
         #endregion Class Constructor
 
-        private HashSet<string> VanishModes { get; set; }
+        private HashSet<ulong> VanishModes { get; set; }
 
         public async UniTask EnableVanishMode(SteamPlayer sPlayer)
         {
@@ -46,7 +46,7 @@ namespace Alpalis.AdminManager.Services
             if (IsInVanishMode(steamID)) return;
             m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled VanishMode.",
                 sPlayer.playerID.characterName, steamID));
-            VanishModes.Add(steamID.ToString());
+            VanishModes.Add(steamID.m_SteamID);
             m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
                 m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey);
             sPlayer.player.movement.canAddSimulationResultsToUpdates = false;
@@ -58,8 +58,9 @@ namespace Alpalis.AdminManager.Services
             if (!IsInVanishMode(steamID)) return;
             m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled VanishMode.",
                 sPlayer.playerID.characterName, steamID));
-            VanishModes.Remove(steamID.ToString());
-            m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID);
+            VanishModes.Remove(steamID.m_SteamID);
+            m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
+                m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey, "VanishMode", 750);
             sPlayer.player.movement.canAddSimulationResultsToUpdates = true;
             PlayerLook look = sPlayer.player.look;
             PlayerMovement movement = sPlayer.player.movement;
@@ -68,7 +69,7 @@ namespace Alpalis.AdminManager.Services
 
         public bool IsInVanishMode(CSteamID steamID)
         {
-            if (VanishModes.Contains(steamID.ToString()))
+            if (VanishModes.Contains(steamID.m_SteamID))
                 return true;
             return false;
         }

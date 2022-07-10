@@ -15,18 +15,18 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 
-namespace Alpalis.AdminManager.Commands.Movement
+namespace Alpalis.AdminManager.Commands
 {
-    public class JumpHeightCommand
+    public class SalvageSpeedCommand
     {
         #region Command Parameters
-        [Command("jumpheight")]
+        [Command("salvagespeed")]
         [CommandSyntax("<multipler> [player]")]
-        [CommandDescription("Command to set jump height.")]
-        [RegisterCommandPermission("other", Description = "Allows to set jump height of other player.")]
+        [CommandDescription("Command to set speed of salvage.")]
+        [RegisterCommandPermission("other", Description = "Allows to set salvage speed of other player.")]
         [CommandActor(typeof(UnturnedUser))]
         #endregion Command Parameters
-        public class JumpHeightUnturned : UnturnedCommand
+        public class SalvageSpeedUnturned : UnturnedCommand
         {
             #region Member Variables
             private readonly IIdentityManagerImplementation m_IdentityManagerImplementation;
@@ -37,7 +37,7 @@ namespace Alpalis.AdminManager.Commands.Movement
             #endregion Member Variables
 
             #region Class Constructor
-            public JumpHeightUnturned(
+            public SalvageSpeedUnturned(
                 IIdentityManagerImplementation identityManagerImplementation,
                 IConfigurationManager configurationManager,
                 IAdminSystem adminSystem,
@@ -59,29 +59,29 @@ namespace Alpalis.AdminManager.Commands.Movement
                 UnturnedUser user = (UnturnedUser)Context.Actor;
                 if (!m_AdminSystem.IsInAdminMode(user))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                         config.MessagePrefix ? m_StringLocalizer["jumpheight_command:prefix"] : "",
-                         m_StringLocalizer["jumpheight_command:error_adminmode"]));
+                         config.MessagePrefix ? m_StringLocalizer["salvagespeed_command:prefix"] : "",
+                         m_StringLocalizer["salvagespeed_command:error_adminmode"]));
                 if (Context.Parameters.Count != 1 && Context.Parameters.Count != 2)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out float multipler))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["jumpheight_command:prefix"] : "",
-                        m_StringLocalizer["jumpheight_command:error_multipler"]));
+                        config.MessagePrefix ? m_StringLocalizer["salvagespeed_command:prefix"] : "",
+                        m_StringLocalizer["salvagespeed_command:error_multipler"]));
                 if (Context.Parameters.Count == 1)
                 {
                     await UniTask.SwitchToMainThread();
-                    user.Player.Player.movement.sendPluginJumpMultiplier(multipler);
+                    user.Player.Player.interact.sendSalvageTimeOverride(multipler);
                     PrintAsync(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["jumpheight_command:prefix"] : "",
-                        m_StringLocalizer["jumpheight_command:yourself", new { Multipler = multipler }]));
+                        config.MessagePrefix ? m_StringLocalizer["salvagespeed_command:prefix"] : "",
+                        m_StringLocalizer["salvagespeed_command:yourself", new { Multipler = multipler }]));
                     return;
                 }
                 if (await CheckPermissionAsync("other") != PermissionGrantResult.Grant)
                     throw new NotEnoughPermissionException(Context, "other");
                 if (!Context.Parameters.TryGet(1, out UnturnedUser? targetUser) || targetUser == null)
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["jumpheight_command:prefix"] : "",
-                        m_StringLocalizer["jumpheight_command:error_player"]));
+                        config.MessagePrefix ? m_StringLocalizer["salvagespeed_command:prefix"] : "",
+                        m_StringLocalizer["salvagespeed_command:error_player"]));
                 SteamPlayer targetSPlayer = targetUser.Player.SteamPlayer;
                 CSteamID targetSteamID = targetSPlayer.playerID.steamID;
                 ushort? targetIdentity = m_IdentityManagerImplementation.GetIdentity(targetSteamID);
@@ -89,10 +89,10 @@ namespace Alpalis.AdminManager.Commands.Movement
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 await UniTask.SwitchToMainThread();
-                targetUser.Player.Player.movement.sendPluginJumpMultiplier(multipler);
+                targetUser.Player.Player.interact.sendSalvageTimeOverride(multipler);
                 targetUser.PrintMessageAsync(string.Format("{0}{1}",
-                    config.MessagePrefix ? m_StringLocalizer["jumpheight_command:prefix"] : "",
-                    m_StringLocalizer["jumpheight_command:somebody:player", new
+                    config.MessagePrefix ? m_StringLocalizer["salvagespeed_command:prefix"] : "",
+                    m_StringLocalizer["salvagespeed_command:somebody:player", new
                     {
                         PlayerName = sPlayer.playerID.playerName,
                         CharacterName = sPlayer.playerID.characterName,
@@ -102,8 +102,8 @@ namespace Alpalis.AdminManager.Commands.Movement
                         Multipler = multipler
                     }]));
                 PrintAsync(string.Format("{0}{1}",
-                    config.MessagePrefix ? m_StringLocalizer["jumpheight_command:prefix"] : "",
-                    m_StringLocalizer["jumpheight_command:somebody:executor", new
+                    config.MessagePrefix ? m_StringLocalizer["salvagespeed_command:prefix"] : "",
+                    m_StringLocalizer["salvagespeed_command:somebody:executor", new
                     {
                         PlayerName = targetSPlayer.playerID.playerName,
                         CharacterName = targetSPlayer.playerID.characterName,
@@ -116,12 +116,12 @@ namespace Alpalis.AdminManager.Commands.Movement
         }
 
         #region Command Parameters
-        [Command("jumpheight")]
+        [Command("salvagespeed")]
         [CommandSyntax("<multipler> <player>")]
-        [CommandDescription("Command to set jump height.")]
+        [CommandDescription("Command to set speed of salvage.")]
         [CommandActor(typeof(ConsoleActor))]
         #endregion Command Parameters
-        public class JumpHeightConsole : UnturnedCommand
+        public class SpeedConsole : UnturnedCommand
         {
             #region Member Variables
             private readonly IIdentityManagerImplementation m_IdentityManagerImplementation;
@@ -131,7 +131,7 @@ namespace Alpalis.AdminManager.Commands.Movement
             #endregion Member Variables
 
             #region Class Constructor
-            public JumpHeightConsole(
+            public SpeedConsole(
                 IIdentityManagerImplementation identityManagerImplementation,
                 IConfigurationManager configurationManager,
                 IStringLocalizer stringLocalizer,
@@ -151,18 +151,18 @@ namespace Alpalis.AdminManager.Commands.Movement
                 if (Context.Parameters.Count != 2)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out float multipler))
-                    throw new UserFriendlyException(m_StringLocalizer["jumpheight_command:error_multipler"]);
+                    throw new UserFriendlyException(m_StringLocalizer["salvagespeed_command:error_multipler"]);
                 if (!Context.Parameters.TryGet(1, out UnturnedUser? user) || user == null)
-                    throw new UserFriendlyException(m_StringLocalizer["jumpheight_command:error_player"]);
+                    throw new UserFriendlyException(m_StringLocalizer["salvagespeed_command:error_player"]);
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 await UniTask.SwitchToMainThread();
-                user.Player.Player.movement.sendPluginJumpMultiplier(multipler);
+                user.Player.Player.movement.sendPluginSpeedMultiplier(multipler);
                 user.PrintMessageAsync(string.Format("{0}{1}",
-                    config.MessagePrefix ? m_StringLocalizer["jumpheight_command:prefix"] : "",
-                    m_StringLocalizer["jumpheight_command:somebody:console", new { Multipler = multipler }]));
-                PrintAsync(m_StringLocalizer["jumpheight_command:somebody:executor", new
+                    config.MessagePrefix ? m_StringLocalizer["salvagespeed_command:prefix"] : "",
+                    m_StringLocalizer["salvagespeed_command:somebody:console", new { Multipler = multipler }]));
+                PrintAsync(m_StringLocalizer["salvagespeed_command:somebody:executor", new
                 {
                     PlayerName = sPlayer.playerID.playerName,
                     CharacterName = sPlayer.playerID.characterName,

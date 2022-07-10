@@ -91,7 +91,7 @@ god_command:
         yourself:
             enabled: "Posiadasz włączony tryb nieśmiertelności."
             disabled: "Posiadasz wyłączony tryb nieśmiertelności."
-feed_command:
+food_command:
     prefix: "<color=#630000>| Alpalis |</color> "
     error_player: "Nie ma takiego gracza na serwerze!"
     error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
@@ -102,7 +102,7 @@ feed_command:
         # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
         executor: "Nakarmiłeś gracza {PlayerName}."
     yourself: "Pomyślnie się nakarmiłeś."
-drink_command:
+water_command:
     prefix: "<color=#630000>| Alpalis |</color> "
     error_player: "Nie ma takiego gracza na serwerze!"
     error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
@@ -113,6 +113,17 @@ drink_command:
         # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
         executor: "Napoiłeś gracza {PlayerName}."
     yourself: "Pomyślnie się napoiłeś."
+virus_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        console: "Konsola cie uzdrowiła."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        player: "{PlayerName} cie uzdrowił."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        executor: "Uzdrowiłeś gracza {PlayerName}."
+    yourself: "Pomyślnie się uzdrowiłeś."
 heal_command:
     prefix: "<color=#630000>| Alpalis |</color> "
     error_player: "Nie ma takiego gracza na serwerze!"
@@ -152,11 +163,28 @@ speed_command:
         executor: "Zmieniłeś prędkość gracza {PlayerName} na {Multipler}."
     # Placeholders: {Multipler}
     yourself: "Pomyślnie zmieniłeś swoją prędkość na {Multipler}."
+salvagespeed_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_multipler: "Podałeś niepoprawny mnożnik prędkości."
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        # Placeholders: {Multipler}
+        console: "Konsola zmieniła twoją prędkość rozkładania przedmiotów na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        player: "{PlayerName} zmienił twoją prędkość rozkładania przedmiotów na {Multipler}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Multipler}
+        executor: "Zmieniłeś prędkość rozkładania przedmiotów gracza {PlayerName} na {Multipler}."
+    # Placeholders: {Multipler}
+    yourself: "Pomyślnie zmieniłeś swoją prędkość rozkładania przedmiotów na {Multipler}."
 gravity_command:
     prefix: "<color=#630000>| Alpalis |</color> "
     error_player: "Nie ma takiego gracza na serwerze!"
     error_multipler: "Podałeś niepoprawny mnożnik grawitacji."
     error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_flymode:
+        yourself: "Nie możesz zmienić swoją grawitację, będąc w trybie latania!"
+        somebody: "Nie możesz zmienić czyjąś grawitację, kiedy jest trybie latania!"
     somebody:
         # Placeholders: {Multipler}
         console: "Konsola zmieniła twoją grawitację na {Multipler}."
@@ -196,3 +224,392 @@ destroy_command:
         vehicle: "Pomyślnie zniszczyłeś pojazd przed tobą!"
         barricade: "Pomyślnie zniszczyłeś barykadę przed tobą!"
         structure: "Pomyślnie zniszczyłeś strukturę przed tobą!"
+owner_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_null: "Nie znaleziono żadnego obiektu przed tobą!"
+    succeed:
+        # Placeholders: {SteamID}
+        vehicle: "Właścicielem tego pojazdu jest {SteamID}."
+        # Placeholders: {SteamID}
+        barricade: "Właścicielem tej barykady jest {SteamID}."
+        # Placeholders: {SteamID}
+        structure: "Właścicielem tej struktury jest {SteamID}."
+ascend_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_distance: "Podałeś niepoprawną odległość."
+    # Placeholders: {Distance}
+    succeed: "Pomyślnie przeniosłeś się w górę o {Distance}m."
+descend_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_distance: "Podałeś niepoprawną odległość."
+    # Placeholders: {Distance}
+    succeed: "Pomyślnie przeniosłeś się w dół o {Distance}m."
+jump_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_null: "Nie znaleziono miejsca, na które patrzysz, aby się przeteleportować!"
+    succeed: "Pomyślnie się przeteleportowałeś."
+teleport_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze, którego chcesz przeteleportować!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_marker: "Nie postawiłeś znacznika!"
+    yourself:
+        error_null: "Nie znaleziono miejsca, do którego się chcesz przeteleportować!"
+        succeed:
+            marker: "Pomyślnie przeteleportowałeś się do swojego znacznika."
+            # Placeholders: {Location}
+            place: "Pomyślnie przeteleportowałeś się do miejsca {Location}."
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player: "Pomyślnie przeteleportowałeś się do gracza {PlayerName}."
+    somebody:
+        error_null: "Nie znaleziono miejsca, do którego chcesz przeteleportować tego gracza!"
+        succeed:
+            console:
+                # Placeholders: {Location}
+                place: "Konsola przeteleportowała cie do miejsca {Location}."
+                # Placeholders: {TargetSteamID}, {TargetCharacterName}, {TargetNickName}, {TargetPlayerName}, {TargetID} - IdentityManager
+                player: "Konsola przeteleportowała cie do gracza {TargetPlayerName}."
+            player:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                marker: "Gracz {PlayerName} przeteleportował cie do swojego znacznika."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Location}
+                place: "Gracz {PlayerName} przeteleportował cie do miejsca {Location}."
+                # Placeholders: {SteamID}, {TargetSteamID}, {CharacterName}, {TargetCharacterName}, {NickName}, {TargetNickName},
+                # {PlayerName}, {TargetPlayerName}, {ID} - IdentityManager, {TargetID} - IdentityManager
+                player: "Gracz {PlayerName} przeteleportował cie do gracza {TargetPlayerName}."
+            executor:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                marker: "Pomyślnie przeteleportowałeś gracza {PlayerName} do swojego znacznika."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Location}
+                place: "Pomyślnie przeteleportowałeś gracza {PlayerName} do miejsca {Location}."
+                # Placeholders: {SteamID}, {TargetSteamID}, {CharacterName}, {TargetCharacterName}, {NickName}, {TargetNickName},
+                # {PlayerName}, {TargetPlayerName}, {ID} - IdentityManager, {TargetID} - IdentityManager
+                player: "Pomyślnie przeteleportowałeś gracza {PlayerName} do gracza {TargetPlayerName}."
+tphere_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze, którego chcesz przeteleportować!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    succeed:
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        player: "Gracz {PlayerName} przeteleportował cie do siebie."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        executor: "Pomyślnie przeteleportowałeś gracza {PlayerName} do siebie." 
+fly_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    get:
+        yourself:
+            enabled: "Posiadasz włączony tryb latania."
+            disabled: "Posiadasz wyłączony tryb latania."
+        somebody:
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            enabled: "Gracz {PlayerName} posiada włączony tryb latania."
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            disabled: "Gracz {PlayerName} posiada wyłączony tryb latania."
+    switch:
+        yourself:
+            enabled: "Włączyłeś tryb latania."
+            disabled: "Wyłączyłeś tryb latania."
+        somebody:
+            console:
+                enabled: "Konsola włączyła ci tryb latania."
+                disabled: "Konsola wyłączyła ci tryb latania."
+            player:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                enabled: "Gracz {PlayerName} włączył ci tryb latania."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                disabled: "Gracz {PlayerName} wyłączył ci tryb latania."
+            executor:
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                enabled: "Włączyłeś tryb latania graczowi {PlayerName}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                disabled: "Wyłączyłeś tryb latania graczowi {PlayerName}."
+refuel_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_null: "Nie znaleziono żadnego obiektu przed tobą!"
+    error_fuel: 
+        # Placeholders: {Vehicle}
+        vehicle: "Nie można zatankować pojazdu {Vehicle}!"
+        # Placeholders: {Object}
+        object: "Nie można zatankować {Object}!"
+    succeed:
+        vehicle:
+            # Placeholders: {Vehicle}
+            current: "Pomyślnie zatankowałeś pojazd, w którym siedzisz."
+            # Placeholders: {Vehicle}
+            looking_at: "Pomyślnie zatankowałeś pojazd, na który patrzysz."
+        # Placeholders: {Object}
+        generator: "Pomyślnie zatankowałeś generator."
+        # Placeholders: {Object}
+        tank: "Pomyślnie zatankowałeś zbiornik."
+        # Placeholders: {Object}
+        object: "Pomyślnie zatankowałeś obiekt."
+experience_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_player: "Nie ma takiego gracza na serwerze!"
+    get:
+        # Placeholders: {Experience}
+        yourself: "Twój poziom doświadczenia to {Experience}."
+        # Placeholders: {Experience}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        somebody: "Poziom doświadczenia gracza {PlayerName} to {Experience}."
+    add:
+        error_amount: "Nie można dodać takiej ilości doświadczenia!"
+        succeed:
+            # Placeholders: {Amount}, {NewExperience}
+            yourself: "Pomyslnie dodałeś sobie {Amount} doświadczenia. Jego nowy poziom to {NewExperience}."
+            somebody:
+                # Placeholders: {Amount}, {NewExperience}
+                console: "Konsola dodała ci {Amount} doświadczenia. Twój nowy poziom to {NewExperience}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewExperience}
+                player: "Gracz {PlayerName} dodał ci {Amount} doświadczenia. Twój nowy poziom to {NewExperience}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewExperience}
+                executor: "Pomyslnie dodałeś {Amount} doświadczenia graczowi {PlayerName}. Jego nowy poziom to {NewExperience}."
+    take:
+        error_amount: "Nie można zabrać takiej ilości doświadczenia!"
+        succeed:
+            # Placeholders: {Amount}, {NewExperience}
+            yourself: "Pomyslnie zabrałeś sobie {Amount} doświadczenia. Jego nowy poziom to {NewExperience}."
+            somebody:
+                # Placeholders: {Amount}, {NewExperience}
+                console: "Konsola zabrała ci {Amount} doświadczenia. Twój nowy poziom to {NewExperience}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewExperience}
+                player: "Gracz {PlayerName} zabrał ci {Amount} doświadczenia. Twój nowy poziom to {NewExperience}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewExperience}
+                executor: "Pomyslnie zabrałeś {Amount} doświadczenia graczowi {PlayerName}. Jego nowy poziom to {NewExperience}."
+    set:
+        error_amount: "Nie można ustawić takiej ilości doświadczenia!"
+        succeed:
+            # Placeholders: {Experience}
+            yourself: "Pomyslnie ustawiłeś sobie doświadczenie na {Experience}."
+            somebody:
+                # Placeholders: {Experience}
+                console: "Konsola ustawiła ci doświadczenie na {Experience}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Experience}
+                player: "Gracz {PlayerName} ustawił ci doświadczenie na {Experience}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Experience}
+                executor: "Pomyslnie ustawiłeś doświadczenie gracza {PlayerName} na {Experience}."
+reputation_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_player: "Nie ma takiego gracza na serwerze!"
+    get:
+        # Placeholders: {Reputation}
+        yourself: "Twój poziom reputacji to {Reputation}."
+        # Placeholders: {Reputation}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        somebody: "Poziom reputacji gracza {PlayerName} to {Reputation}."
+    add:
+        error_amount: "Nie można dodać takiej ilości reputacji!"
+        succeed:
+            # Placeholders: {Amount}, {NewExperience}
+            yourself: "Pomyslnie dodałeś sobie {Amount} reputacji. Jego nowy poziom to {NewReputation}."
+            somebody:
+                # Placeholders: {Amount}, {NewReputation}
+                console: "Konsola dodała ci {Amount} reputacji. Twój nowy poziom to {NewReputation}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewReputation}
+                player: "Gracz {PlayerName} dodał ci {Amount} reputacji. Twój nowy poziom to {NewReputation}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewReputation}
+                executor: "Pomyslnie dodałeś {Amount} reputacji graczowi {PlayerName}. Jego nowy poziom to {NewReputation}."
+    take:
+        error_amount: "Nie można zabrać takiej ilości reputacji!"
+        succeed:
+            # Placeholders: {Amount}, {NewReputation}
+            yourself: "Pomyslnie zabrałeś sobie {Amount} reputacji. Jego nowy poziom to {NewReputation}."
+            somebody:
+                # Placeholders: {Amount}, {NewReputation}
+                console: "Konsola zabrała ci {Amount} reputacji. Twój nowy poziom to {NewReputation}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewReputation}
+                player: "Gracz {PlayerName} zabrał ci {Amount} reputacji. Twój nowy poziom to {NewReputation}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Amount}, {NewReputation}
+                executor: "Pomyslnie zabrałeś {Amount} reputacji graczowi {PlayerName}. Jego nowy poziom to {NewReputation}."
+    set:
+        error_amount: "Nie można ustawić takiej ilości doświadczenia!"
+        succeed:
+            # Placeholders: {Reputation}
+            yourself: "Pomyslnie ustawiłeś sobie reputację na {Reputation}."
+            somebody:
+                # Placeholders: {Reputation}
+                console: "Konsola ustawiła ci reputację na {Reputation}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Reputation}
+                player: "Gracz {PlayerName} ustawił ci reputację na {Reputation}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager, {Reputation}
+                executor: "Pomyslnie ustawiłeś reputację gracza {PlayerName} na {Reputation}."
+maxskills_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_player: "Nie ma takiego gracza na serwerze!"
+    succeed:
+        yourself: "Pomyslnie wymaksowałeś swoje umiejętności."
+        somebody:
+            console: "Konsola wymaksowała twoje umiejętności."
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player: "Gracz {PlayerName} wymaksował twoje umiejętności."
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            executor: "Pomyślnie wymaksowałeś umiejętności gracza {PlayerName}."
+chat_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    clear:
+        succeed:
+            console: "Konsola wyczyściła czat!"
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player: "Gracz {PlayerName} wyczyścił czat!"
+            executor: "Pomyslnie wyczyściłeś czat!"
+    disable:
+        error_disabled: "Nie możesz wyłączyć czatu, gdyż już jest wyłączony!"
+        succeed:
+            console: "Konsola wyłączyła czat!"
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player: "Gracz {PlayerName} wyłączył czat!"
+            executor: "Pomyslnie wyłączyłeś czat!"
+    enable:
+        error_enabled: "Nie możesz włączyć czatu, gdyż już jest włączony!"
+        succeed:
+            console: "Konsola włączyła czat!"
+            # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player: "Gracz {PlayerName} włączył czat!"
+            executor: "Pomyslnie włączyłeś czat!"
+item_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_null: "Taki przedmiot nie istnieje!"
+    error_null_number: "Podałeś niepoprawną ilość przedmiotów!"
+    error_high_number: "Podałeś zbyt dużą ilość przedmiotów!"
+    succeed:
+        yourself:
+            # Placeholders: {ItemName}, {ItemID}
+            one: "Daleś sobie przedmiot {ItemName}({ItemID})."
+            # Placeholders: {ItemName}, {ItemID}, {ItemAmount}
+            many: "Dałeś sobie przedmiot {ItemName}({ItemID}) w ilości {ItemAmount}."
+        somebody:
+            # Placeholders: {ItemName}, {ItemID}, {ItemAmount}
+            console: "Konsola dała ci przedmiot {ItemName}({ItemID}) w ilości {ItemAmount}."
+            # Placeholders: {ItemName}, {ItemID}, {ItemAmount}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player: "Gracz {PlayerName} dał ci przedmiot {ItemName}({ItemID}) w ilości {ItemAmount}."
+            # Placeholders: {ItemName}, {ItemID}, {ItemAmount}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            executor: "Dałeś graczowi {PlayerName} przedmiot {ItemName}({ItemID}) w ilości {ItemAmount}."
+more_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_null: "Nie trzymasz żadnego przedmiotu w ręce!"
+    error_null_number: "Podałeś niepoprawną ilość przedmiotów!"
+    error_high_number: "Podałeś zbyt dużą ilość przedmiotów!"
+    succeed:
+        # Placeholders: {ItemName}, {ItemID}
+        one: "Daleś sobie przedmiot {ItemName}({ItemID})."
+        # Placeholders: {ItemName}, {ItemID}, {ItemAmount}
+        many: "Dałeś sobie przedmiot {ItemName}({ItemID}) w ilości {ItemAmount}."
+vehicle_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_null: "Taki pojazd nie istnieje!"
+    error_unknown: "Nie udało się zespawnować pojazdu!"
+    succeed:
+        # Placeholders: {VehicleName}, {VehicleID}
+        yourself: "Daleś sobie pojazd {VehicleName}({VehicleID})."
+        somebody:
+            # Placeholders: {VehicleName}, {VehicleID}
+            console: "Konsola dała ci pojazd {VehicleName}({VehicleID})."
+            # Placeholders: {VehicleName}, {VehicleID}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player: "Gracz {PlayerName} dał ci pojazd {VehicleName}({VehicleID})."
+            # Placeholders: {VehicleName}, {VehicleID}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            executor: "Dałeś graczowi {PlayerName} pojazd {VehicleName}({VehicleID})."
+open_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_null: "Nie ma przed tobą obiektu, który możnaby było otworzyć lub zamknąć!"
+    succeed:
+        door:
+            open: "Pomyślnie otworzyłeś drzwi."
+            close: "Pomyślnie zamknąłeś drzwi."
+        vehicle:
+            open: "Pomyślnie otworzyłeś pojazd."
+            close: "Pomyślnie zamknąłeś pojazd."
+        storage: "Pomyślnie otworzyłeś magazyn."
+clear_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_distance: "Podałeś błędną odległość!"
+    inventory:
+        error_player: "Nie ma takiego gracza na serwerze!"
+        succeed:
+            yourself: "Wyczyściłeś sobie ekwipunek."
+            somebody:
+                console: "Konsola wyczyściła ci ekwipunek."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                player: "Gracz {PlayerName} wyczyścił ci ekwipunek."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                executor: "Wyczyściłeś ekwipunek graczowi {PlayerName}."
+    items:
+        # Placeholders: {Amount}
+        succeed: "Pomyślnie usunąłeś {Amount} przedmiotów."
+        error_null: "Nie znaleziono żadnego przedmiotu do usunięcia!"
+    vehicles:
+        # Placeholders: {Amount}
+        succeed: "Pomyślnie usunąłeś {Amount} pojazdów."
+        error_null: "Nie znaleziono żadnego pojazdu do usunięcia!"
+effectui_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_id: "Podałeś błędne ID!"
+    error_key: "Podałeś błędny klucz!"
+    succeed:
+        # Placeholders: {EffectID}, {EffectKey}
+        yourself: "Pomyślnie wyświetliłeś sobie UI o ID {EffectID} i kluczu {EffectKey}."
+        somebody:
+        # Placeholders: {EffectID}, {EffectKey}
+            console: "Konsola wyświetliła ci "
+            # Placeholders: {EffectID}, {EffectKey}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            player:
+            # Placeholders: {EffectID}, {EffectKey}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+            executor:
+respawn_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    vehicles:
+        succeed: "Pomyślnie zrespawnowałeś na nowo wszystkie pojazdy!"
+    animals:
+        # Placeholders: {Amount}
+        succeed: "Pomyślnie zrespawnowałeś na nowo {Amount} zwierząt."
+        error_null: "Nie znaleziono żadnego zwierzęcia do zrespawnowania!"
+    zombies:
+        # Placeholders: {Amount}
+        succeed: "Pomyślnie zrespawnowałeś na nowo {Amount} zombie."
+        error_null: "Nie znaleziono żadnego zombie do zrespawnowania!"
+requesturl_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_url: "Podałeś niepoprawny link!"
+    succeed:
+        # Placeholders: {URL}
+        yourself: "Pomyślnie wysłałeś sobie zapytanie z linkiem {URL}."
+        somebody:
+            console:
+                # Placeholders: {URL}, {Message}
+                withmessage: "Konsola wysłała ci zapytanie o treści {Message} z linkiem {URL}."
+                # Placeholders: {URL}
+                withoutmessage: "Konsola wysłała ci zapytanie z linkiem {URL}."
+            player:
+                # Placeholders: {URL}, {Message}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                withmessage: "Gracz {PlayerName} wysłał ci zapytanie o treści {Message} z linkiem {URL}."
+                # Placeholders: {URL}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                withoutmessage: "Gracz {PlayerName} wysłała ci zapytanie z linkiem {URL}."
+            executor:
+                # Placeholders: {URL}, {Message}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                withmessage: "Wysłałeś zapytanie graczowi {PlayerName} o treści {Message} z linkiem {URL}."
+                # Placeholders: {URL}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+                withoutmessage: "Wysłałeś zapytanie graczowi {PlayerName} z linkiem {URL}."
+chat_message:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    chat_disabled: "Nie możesz wysłać wiadomości, gdyż czat jest wyłączony!"
+    muted: "Nie możesz wysłać wiadomości, gdyż jesteś wyciszony!"

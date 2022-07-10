@@ -7,6 +7,7 @@ using OpenMod.API.Commands;
 using OpenMod.API.Permissions;
 using OpenMod.API.Plugins;
 using OpenMod.Core.Commands;
+using OpenMod.Core.Console;
 using OpenMod.Core.Permissions;
 using OpenMod.Unturned.Commands;
 using OpenMod.Unturned.Users;
@@ -64,6 +65,8 @@ namespace Alpalis.AdminManager.Commands.Life
                 {
                     await UniTask.SwitchToMainThread();
                     user.Player.Player.life.serverModifyHealth(100);
+                    user.Player.Player.life.serverSetBleeding(false);
+                    user.Player.Player.life.serverSetLegsBroken(false);
                     PrintAsync(string.Format("{0}{1}",
                         config.MessagePrefix ? m_StringLocalizer["heal_command:prefix"] : "",
                         m_StringLocalizer["heal_command:yourself"]));
@@ -85,6 +88,8 @@ namespace Alpalis.AdminManager.Commands.Life
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 await UniTask.SwitchToMainThread();
                 targetUser.Player.Player.life.serverModifyHealth(100);
+                targetUser.Player.Player.life.serverSetBleeding(false);
+                targetUser.Player.Player.life.serverSetLegsBroken(false);
                 targetUser.PrintMessageAsync(string.Format("{0}{1}",
                     config.MessagePrefix ? m_StringLocalizer["heal_command:prefix"] : "",
                     m_StringLocalizer["heal_command:somebody:player", new
@@ -112,7 +117,7 @@ namespace Alpalis.AdminManager.Commands.Life
         [Command("heal")]
         [CommandSyntax("<player>")]
         [CommandDescription("Command to heal other players.")]
-        [CommandActor(typeof(UnturnedUser))]
+        [CommandActor(typeof(ConsoleActor))]
         #endregion Command Parameters
         public class HealConsole : UnturnedCommand
         {
@@ -144,14 +149,14 @@ namespace Alpalis.AdminManager.Commands.Life
                 if (Context.Parameters.Count != 1)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out UnturnedUser? user) || user == null)
-                    throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["heal_command:prefix"] : "",
-                        m_StringLocalizer["heal_command:error_player"]));
+                    throw new UserFriendlyException(m_StringLocalizer["heal_command:error_player"]);
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
                 await UniTask.SwitchToMainThread();
                 user.Player.Player.life.serverModifyHealth(100);
+                user.Player.Player.life.serverSetBleeding(false);
+                user.Player.Player.life.serverSetLegsBroken(false);
                 user.PrintMessageAsync(string.Format("{0}{1}",
                     config.MessagePrefix ? m_StringLocalizer["heal_command:prefix"] : "",
                     m_StringLocalizer["heal_command:somebody:console"]));

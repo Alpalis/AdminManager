@@ -61,7 +61,7 @@ namespace Alpalis.AdminManager.Commands.Movement
                     throw new UserFriendlyException(string.Format("{0}{1}",
                          config.MessagePrefix ? m_StringLocalizer["speed_command:prefix"] : "",
                          m_StringLocalizer["speed_command:error_adminmode"]));
-                if (Context.Parameters.Count == 1 || Context.Parameters.Count == 2)
+                if (Context.Parameters.Count != 1 && Context.Parameters.Count != 2)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out float multipler))
                     throw new UserFriendlyException(string.Format("{0}{1}",
@@ -148,16 +148,12 @@ namespace Alpalis.AdminManager.Commands.Movement
             protected override async UniTask OnExecuteAsync()
             {
                 Config config = m_ConfigurationManager.GetConfig<Config>(m_Plugin);
-                if (Context.Parameters.Count == 2)
+                if (Context.Parameters.Count != 2)
                     throw new CommandWrongUsageException(Context);
                 if (!Context.Parameters.TryGet(0, out float multipler))
-                    throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["speed_command:prefix"] : "",
-                        m_StringLocalizer["speed_command:error_multipler"]));
+                    throw new UserFriendlyException(m_StringLocalizer["speed_command:error_multipler"]);
                 if (!Context.Parameters.TryGet(1, out UnturnedUser? user) || user == null)
-                    throw new UserFriendlyException(string.Format("{0}{1}",
-                        config.MessagePrefix ? m_StringLocalizer["speed_command:prefix"] : "",
-                        m_StringLocalizer["speed_command:error_player"]));
+                    throw new UserFriendlyException(m_StringLocalizer["speed_command:error_player"]);
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 ushort? identity = m_IdentityManagerImplementation.GetIdentity(steamID);
