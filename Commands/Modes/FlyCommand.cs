@@ -95,7 +95,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                         m_FlySystem.DisableFlyMode(sPlayer);
                     else
                         m_FlySystem.EnableFlyMode(sPlayer);
-                    PrintAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
+                    PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
                         m_StringLocalizer[string.Format("fly_command:switch:yourself:{0}",
                         result ? "disabled" : "enabled")]));
                     return;
@@ -118,7 +118,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                     m_FlySystem.DisableFlyMode(targetSPlayer);
                 else
                     m_FlySystem.EnableFlyMode(targetSPlayer);
-                targetUser.PrintMessageAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
+                targetUser.PrintMessageAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
                     m_StringLocalizer[string.Format("fly_command:switch:somebody:player:{0}",
                     targetResult ? "disabled" : "enabled"), new
                     {
@@ -128,7 +128,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                         SteamID = user.SteamId,
                         ID = identity
                     }]));
-                PrintAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
+                PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
                     m_StringLocalizer[string.Format("fly_command:switch:somebody:executor:{0}",
                     targetResult ? "disabled" : "enabled"), new
                     {
@@ -191,7 +191,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                     m_FlySystem.DisableFlyMode(sPlayer);
                 else
                     m_FlySystem.EnableFlyMode(sPlayer);
-                user.PrintMessageAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
+                user.PrintMessageAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["fly_command:prefix"] : "",
                     m_StringLocalizer[string.Format("fly_command:switch:somebody:console:{0}",
                     result ? "disabled" : "enabled")]));
                 PrintAsync(m_StringLocalizer[string.Format("fly_command:switch:somebody:executor:{0}",

@@ -56,12 +56,12 @@ namespace Alpalis.AdminManager.Commands
                      m_StringLocalizer["destroy_command:error_adminmode"]));
             await UniTask.SwitchToMainThread();
             PlayerLook look = user.Player.Player.look;
-            if (!PhysicsUtility.raycast(new(look.getEyesPosition(), look.aim.forward),
-                out var hit, 8f, RayMasks.BARRICADE | RayMasks.STRUCTURE | RayMasks.VEHICLE))
+            RaycastInfo raycast = DamageTool.raycast(new(look.aim.position, look.aim.forward), 8f, RayMasks.BARRICADE | RayMasks.STRUCTURE | RayMasks.VEHICLE);
+            if (raycast == null)
                 throw new UserFriendlyException(string.Format("{0}{1}",
                          config.MessagePrefix ? m_StringLocalizer["destroy_command:prefix"] : "",
                          m_StringLocalizer["destroy_command:error_null"]));
-            InteractableVehicle vehicle = hit.collider.GetComponent<InteractableVehicle>();
+            InteractableVehicle vehicle = raycast.vehicle;
             if (vehicle != null)
             {
                 VehicleManager.askVehicleDestroy(vehicle);
@@ -69,16 +69,16 @@ namespace Alpalis.AdminManager.Commands
                     m_StringLocalizer["destroy_command:succeed:vehicle"]));
                 return;
             }
-            BarricadeDrop bDrop = BarricadeManager.FindBarricadeByRootTransform(hit.transform);
-            if (bDrop != null && BarricadeManager.tryGetRegion(hit.transform, out byte bx, out byte by, out ushort plant, out _))
+            BarricadeDrop bDrop = BarricadeManager.FindBarricadeByRootTransform(raycast.transform);
+            if (bDrop != null && BarricadeManager.tryGetRegion(raycast.transform, out byte bx, out byte by, out ushort plant, out _))
             {
                 BarricadeManager.destroyBarricade(bDrop, bx, by, plant);
                 PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["destroy_command:prefix"] : ""),
                     m_StringLocalizer["destroy_command:succeed:barricade"]));
                 return;
             }
-            StructureDrop sDrop = StructureManager.FindStructureByRootTransform(hit.transform);
-            if (sDrop != null && StructureManager.tryGetRegion(hit.transform, out byte sx, out byte sy, out _))
+            StructureDrop sDrop = StructureManager.FindStructureByRootTransform(raycast.transform);
+            if (sDrop != null && StructureManager.tryGetRegion(raycast.transform, out byte sx, out byte sy, out _))
             {
                 StructureManager.destroyStructure(sDrop, sx, sy, Vector3.zero);
                 PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["destroy_command:prefix"] : ""),

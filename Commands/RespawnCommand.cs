@@ -42,6 +42,7 @@ namespace Alpalis.AdminManager.Commands
         [Command("animals")]
         [CommandAlias("animal")]
         [CommandDescription("Command to respawn animals.")]
+        [CommandParent(typeof(RespawnRoot))]
         #endregion Command Parameters
         public class Animals : UnturnedCommand
         {
@@ -99,6 +100,7 @@ namespace Alpalis.AdminManager.Commands
         [Command("zombies")]
         [CommandAlias("zombie")]
         [CommandDescription("Command to respawn zombies.")]
+        [CommandParent(typeof(RespawnRoot))]
         #endregion Command Parameters
         public class Zombies : UnturnedCommand
         {
@@ -164,6 +166,7 @@ namespace Alpalis.AdminManager.Commands
         [Command("vehicles")]
         [CommandAlias("vehicle")]
         [CommandDescription("Command to respawn vehicles.")]
+        [CommandParent(typeof(RespawnRoot))]
         #endregion Command Parameters
         public class Vehicles : UnturnedCommand
         {

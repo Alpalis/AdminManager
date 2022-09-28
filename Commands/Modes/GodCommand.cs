@@ -95,7 +95,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                         m_GodSystem.DisableGodMode(sPlayer);
                     else
                         m_GodSystem.EnableGodMode(sPlayer);
-                    PrintAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
+                    PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
                         m_StringLocalizer[string.Format("god_command:switch:yourself:{0}",
                         result ? "disabled" : "enabled")]));
                     return;
@@ -118,7 +118,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                     m_GodSystem.DisableGodMode(targetSPlayer);
                 else
                     m_GodSystem.EnableGodMode(targetSPlayer);
-                targetUser.PrintMessageAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
+                targetUser.PrintMessageAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
                     m_StringLocalizer[string.Format("god_command:switch:somebody:player:{0}",
                     targetResult ? "disabled" : "enabled"), new
                     {
@@ -128,7 +128,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                         SteamID = user.SteamId,
                         ID = identity
                     }]));
-                PrintAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
+                PrintAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
                     m_StringLocalizer[string.Format("god_command:switch:somebody:executor:{0}",
                     targetResult ? "disabled" : "enabled"), new
                     {
@@ -193,7 +193,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                     m_GodSystem.DisableGodMode(sPlayer);
                 else
                     m_GodSystem.EnableGodMode(sPlayer);
-                user.PrintMessageAsync(string.Format("{0} {1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
+                user.PrintMessageAsync(string.Format("{0}{1}", config.MessagePrefix ? m_StringLocalizer["god_command:prefix"] : "",
                     m_StringLocalizer[string.Format("god_command:switch:somebody:console:{0}",
                     result ? "disabled" : "enabled")]));
                 PrintAsync(m_StringLocalizer[string.Format("god_command:switch:somebody:executor{0}", result ? "disabled" : "enabled"), new

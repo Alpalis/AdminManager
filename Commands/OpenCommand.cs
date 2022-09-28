@@ -11,6 +11,7 @@ using OpenMod.Unturned.Users;
 using SDG.Framework.Utilities;
 using SDG.Unturned;
 using System;
+using UnityEngine;
 
 namespace Alpalis.AdminManager.Commands
 {
@@ -55,12 +56,13 @@ namespace Alpalis.AdminManager.Commands
                      m_StringLocalizer["open_command:error_adminmode"]));
             PlayerLook look = user.Player.Player.look;
             await UniTask.SwitchToMainThread();
-            if (!PhysicsUtility.raycast(new(look.getEyesPosition(), look.aim.forward),
-                out var hit, 8f, RayMasks.BARRICADE | RayMasks.VEHICLE))
+            Transform aim = user.Player.Player.look.aim;
+            RaycastInfo raycast = DamageTool.raycast(new(aim.position, aim.forward), 8f, RayMasks.BARRICADE | RayMasks.VEHICLE);
+            if (raycast == null)
                 throw new UserFriendlyException(string.Format("{0}{1}",
                     config.MessagePrefix ? m_StringLocalizer["open_command:prefix"] : "",
                     m_StringLocalizer["open_command:error_null"]));
-            Interactable interactable = hit.collider.GetComponent<Interactable>();
+            Interactable interactable = raycast.collider.GetComponent<Interactable>();
             if (interactable is InteractableDoorHinge hinge and { door: not null })
             {
                 BarricadeManager.ServerSetDoorOpen(hinge.door, !hinge.door.isOpen);

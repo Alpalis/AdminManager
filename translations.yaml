@@ -113,6 +113,11 @@ water_command:
         # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
         executor: "Napoiłeś gracza {PlayerName}."
     yourself: "Pomyślnie się napoiłeś."
+join_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_ip: "Podałeś niepoprawne IP!"
+    error_port: "Podałeś niepoprawny port!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
 virus_command:
     prefix: "<color=#630000>| Alpalis |</color> "
     error_player: "Nie ma takiego gracza na serwerze!"
@@ -609,7 +614,51 @@ requesturl_command:
                 withmessage: "Wysłałeś zapytanie graczowi {PlayerName} o treści {Message} z linkiem {URL}."
                 # Placeholders: {URL}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
                 withoutmessage: "Wysłałeś zapytanie graczowi {PlayerName} z linkiem {URL}."
+exit_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    message: "Pomyślnie wyszedłeś z serwera!"
+time_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    # Placeholders: {Time}
+    get: "Czas świata to {Time}."
+    set:
+        error_time: "Podałeś niepoprawny czas!"
+        error_maxtime: "Czas musi być mniejszy niż 3600!"
+        # Placeholders: {Time}
+        succeed: "Pomyslnie ustawiłeś czas świata na {Time}."
+weather_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    weathers:
+        sunny: "Słonecznie"
+        blizzard: "Śnieżyca"
+        storm: "Burza"
+    set:
+        error_weather: "Podałeś złą pogodę!"
+        # Placeholders: {Weather}
+        succeed: "Pomyslnie ustawiłeś pogodę świata na \"{Weather}\"."
+    disable: "Pomyślnie wyłączyłeś pogodę."
+kill_command:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    error_player: "Nie ma takiego gracza na serwerze!"
+    error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    somebody:
+        console: "Konsola cie zabiła."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        player: "{PlayerName} cie zabił."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {ID} - IdentityManager
+        executor: "Zabiłeś gracza {PlayerName}."
+    yourself: "Pomyslnie się zabiłeś."
 chat_message:
     prefix: "<color=#630000>| Alpalis |</color> "
     chat_disabled: "Nie możesz wysłać wiadomości, gdyż czat jest wyłączony!"
     muted: "Nie możesz wysłać wiadomości, gdyż jesteś wyciszony!"
+modes:
+    prefix: "<color=#630000>| Alpalis |</color> "
+    recover:
+        adminmode: "Pomyslnie przywrócono tryb administratora."
+        godmode: "Pomyslnie przywrócono tryb nieśmiertelności."
+        vanishmode: "Pomyślnie przywrócono tryb niewidzialności."
+        flymode: "Pomyslnie przywrócono tryb latania."

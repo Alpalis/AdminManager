@@ -292,7 +292,7 @@ namespace Alpalis.AdminManager.Commands
         }
 
         #region Command Parameters
-        [Command("vehicle")]
+        [Command("vehicles")]
         [CommandSyntax("<distance> [clearLocked]")]
         [CommandDescription("Command to clear vehicles.")]
         [CommandActor(typeof(UnturnedUser))]

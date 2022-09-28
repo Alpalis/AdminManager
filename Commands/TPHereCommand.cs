@@ -57,7 +57,7 @@ namespace Alpalis.AdminManager.Commands
                 throw new UserFriendlyException(string.Format("{0}{1}",
                      config.MessagePrefix ? m_StringLocalizer["tphere_command:prefix"] : "",
                      m_StringLocalizer["tphere_command:error_adminmode"]));
-            if (!Context.Parameters.TryGet(1, out UnturnedUser? teleportUser) || teleportUser == null)
+            if (!Context.Parameters.TryGet(0, out UnturnedUser? teleportUser) || teleportUser == null)
                 throw new UserFriendlyException(string.Format("{0}{1}",
                     config.MessagePrefix ? m_StringLocalizer["tphere_command:prefix"] : "",
                     m_StringLocalizer["tphere_command:error_player"]));
