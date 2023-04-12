@@ -257,7 +257,7 @@ namespace Alpalis.AdminManager.Commands.Modes
 
             public GetConsole(
                 IAdminSystem adminSystem,
-                IStringLocalizer stringLocalizer,,
+                IStringLocalizer stringLocalizer,
                 IConfigurationManager configurationManager,
                 IPluginAccessor<Main> pluginAccessor,
                 IServiceProvider serviceProvider) : base(serviceProvider)
