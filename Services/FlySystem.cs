@@ -18,20 +18,11 @@ namespace Alpalis.AdminManager.Services
     [ServiceImplementation(Lifetime = ServiceLifetime.Singleton, Priority = Priority.Normal)]
     public class FlySystem : IFlySystem
     {
-        private readonly IUIManager m_UIManager;
-        private readonly IConfigurationManager m_ConfigurationManager;
-        private readonly Main m_Plugin;
         private readonly ILogger<FlySystem> m_Logger;
 
         public FlySystem(
-            IUIManager uiManager,
-            IConfigurationManager configurationManager,
-            IPluginAccessor<Main> plugin,
             ILogger<FlySystem> logger)
         {
-            m_UIManager = uiManager;
-            m_ConfigurationManager = configurationManager;
-            m_Plugin = plugin.Instance!;
             m_Logger = logger;
             FlyModes = new();
         }

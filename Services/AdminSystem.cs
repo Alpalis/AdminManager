@@ -22,7 +22,6 @@ namespace Alpalis.AdminManager.Services
     {
         private readonly IGodSystem m_GodSystem;
         private readonly IVanishSystem m_VanishSystem;
-        private readonly IUIManager m_UIManager;
         private readonly IConfigurationManager m_ConfigurationManager;
         private readonly Main m_Plugin;
         private readonly ILogger<AdminSystem> m_Logger;
@@ -31,7 +30,6 @@ namespace Alpalis.AdminManager.Services
         public AdminSystem(
             IGodSystem godSystem,
             IVanishSystem vanishSystem,
-            IUIManager uiManager,
             IConfigurationManager configurationManager,
             IPluginAccessor<Main> plugin,
             ILogger<AdminSystem> logger,
@@ -39,7 +37,6 @@ namespace Alpalis.AdminManager.Services
         {
             m_GodSystem = godSystem;
             m_VanishSystem = vanishSystem;
-            m_UIManager = uiManager;
             m_ConfigurationManager = configurationManager;
             m_Plugin = plugin.Instance!;
             m_Logger = logger;

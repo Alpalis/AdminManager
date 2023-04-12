@@ -18,20 +18,11 @@ namespace Alpalis.AdminManager.Services
     [ServiceImplementation(Lifetime = ServiceLifetime.Singleton, Priority = Priority.Normal)]
     public class GodSystem : IGodSystem, IDisposable
     {
-        private readonly IUIManager m_UIManager;
-        private readonly IConfigurationManager m_ConfigurationManager;
-        private readonly Main m_Plugin;
         private readonly ILogger<GodSystem> m_Logger;
 
         public GodSystem(
-            IUIManager uiManager,
-            IConfigurationManager configurationManager,
-            IPluginAccessor<Main> plugin,
             ILogger<GodSystem> logger)
         {
-            m_UIManager = uiManager;
-            m_ConfigurationManager = configurationManager;
-            m_Plugin = plugin.Instance!;
             m_Logger = logger;
             GodModes = new();
             StatUpdatingPatch.OnStatUpdating += OnStatUpdating;

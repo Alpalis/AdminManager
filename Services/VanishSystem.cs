@@ -16,20 +16,11 @@ namespace Alpalis.AdminManager.Services
     [ServiceImplementation(Lifetime = ServiceLifetime.Singleton, Priority = Priority.Normal)]
     public class VanishSystem : IVanishSystem
     {
-        private readonly IUIManager m_UIManager;
-        private readonly IConfigurationManager m_ConfigurationManager;
-        private readonly Main m_Plugin;
         private readonly ILogger<VanishSystem> m_Logger;
 
         public VanishSystem(
-            IUIManager uiManager,
-            IConfigurationManager configurationManager,
-            IPluginAccessor<Main> plugin,
             ILogger<VanishSystem> logger)
         {
-            m_UIManager = uiManager;
-            m_ConfigurationManager = configurationManager;
-            m_Plugin = plugin.Instance!;
             m_Logger = logger;
             VanishModes = new();
         }

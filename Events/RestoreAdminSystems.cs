@@ -20,9 +20,6 @@ namespace Alpalis.AdminManager.Events
         private readonly IVanishSystem m_VanishSystem;
         private readonly IGodSystem m_GodSystem;
         private readonly IFlySystem m_FlySystem;
-        private readonly IUIManager m_UIManager;
-        private readonly IConfigurationManager m_ConfigurationManager;
-        private readonly Main m_Plugin;
         private readonly IStringLocalizer m_StringLocalizer;
         private readonly ILogger<RestoreAdminSystems> m_Logger;
 
@@ -30,20 +27,14 @@ namespace Alpalis.AdminManager.Events
             IAdminSystem adminSystem,
             IVanishSystem vanishSystem,
             IGodSystem godSystem,
-            IUIManager uiManager,
             IFlySystem flySystem,
-            IConfigurationManager configurationManager,
-            Main plugin,
             IStringLocalizer stringLocalizer,
             ILogger<RestoreAdminSystems> logger)
         {
             m_AdminSystem = adminSystem;
             m_VanishSystem = vanishSystem;
             m_GodSystem = godSystem;
-            m_UIManager = uiManager;
             m_FlySystem = flySystem;
-            m_ConfigurationManager = configurationManager;
-            m_Plugin = plugin;
             m_StringLocalizer = stringLocalizer;
             m_Logger = logger;
         }
