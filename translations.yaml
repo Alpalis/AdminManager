@@ -1,7 +1,8 @@
 ﻿adminmode_command:
-    prefix: "<color=#630000>| Alpalis |</color> "
+    prefix: "<color=#630000>| AdminManager |</color> "
     error_player: "Nie ma takiego gracza na serwerze!"
     error_adminmode: "Nie możesz tego zrobić bez włączonego trybu administratora!"
+    error_disabled: "Admin mode is disabled!"
     switch:
         somebody:
             console:

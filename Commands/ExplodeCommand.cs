@@ -8,5 +8,6 @@ namespace Alpalis.AdminManager.Commands
 {
     internal class ExplodeCommand
     {
+        // copy from previous repo and fix
     }
 }

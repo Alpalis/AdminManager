@@ -14,21 +14,18 @@ using System.Collections.Generic;
 namespace Alpalis.AdminManager.Services
 {
     [ServiceImplementation(Lifetime = ServiceLifetime.Singleton, Priority = Priority.Normal)]
-    public class SVanishSystem : IVanishSystem
+    public class VanishSystem : IVanishSystem
     {
-        #region Member Variables
         private readonly IUIManager m_UIManager;
         private readonly IConfigurationManager m_ConfigurationManager;
         private readonly Main m_Plugin;
-        private readonly ILogger<SVanishSystem> m_Logger;
-        #endregion Member Variables
+        private readonly ILogger<VanishSystem> m_Logger;
 
-        #region Class Constructor
-        public SVanishSystem(
+        public VanishSystem(
             IUIManager uiManager,
             IConfigurationManager configurationManager,
             IPluginAccessor<Main> plugin,
-            ILogger<SVanishSystem> logger)
+            ILogger<VanishSystem> logger)
         {
             m_UIManager = uiManager;
             m_ConfigurationManager = configurationManager;
@@ -36,7 +33,6 @@ namespace Alpalis.AdminManager.Services
             m_Logger = logger;
             VanishModes = new();
         }
-        #endregion Class Constructor
 
         private HashSet<ulong> VanishModes { get; set; }
 
@@ -44,11 +40,11 @@ namespace Alpalis.AdminManager.Services
         {
             CSteamID steamID = sPlayer.playerID.steamID;
             if (IsInVanishMode(steamID)) return;
-            m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled VanishMode.",
+            m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled vanishmode",
                 sPlayer.playerID.characterName, steamID));
             VanishModes.Add(steamID.m_SteamID);
-            m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
-                m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey);
+            //m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
+            //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey);
             sPlayer.player.movement.canAddSimulationResultsToUpdates = false;
         }
 
@@ -56,11 +52,11 @@ namespace Alpalis.AdminManager.Services
         {
             CSteamID steamID = sPlayer.playerID.steamID;
             if (!IsInVanishMode(steamID)) return;
-            m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled VanishMode.",
+            m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled vanishmode",
                 sPlayer.playerID.characterName, steamID));
             VanishModes.Remove(steamID.m_SteamID);
-            m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
-                m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey, "VanishMode", 750);
+            //m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
+            //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey, "VanishMode", 750);
             sPlayer.player.movement.canAddSimulationResultsToUpdates = true;
             PlayerLook look = sPlayer.player.look;
             PlayerMovement movement = sPlayer.player.movement;

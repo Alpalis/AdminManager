@@ -8,5 +8,6 @@ namespace Alpalis.AdminManager.Commands.Information
 {
     internal class PingCommand
     {
+        // to rework from another repo
     }
 }

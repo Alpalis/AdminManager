@@ -18,14 +18,11 @@ namespace Alpalis.AdminManager.Services
     [ServiceImplementation(Lifetime = ServiceLifetime.Singleton, Priority = Priority.Normal)]
     public class GodSystem : IGodSystem, IDisposable
     {
-        #region Member Variables
         private readonly IUIManager m_UIManager;
         private readonly IConfigurationManager m_ConfigurationManager;
         private readonly Main m_Plugin;
         private readonly ILogger<GodSystem> m_Logger;
-        #endregion Member Variables
 
-        #region Class Constructor
         public GodSystem(
             IUIManager uiManager,
             IConfigurationManager configurationManager,
@@ -39,7 +36,6 @@ namespace Alpalis.AdminManager.Services
             GodModes = new();
             StatUpdatingPatch.OnStatUpdating += OnStatUpdating;
         }
-        #endregion Class Constructor
 
         private HashSet<ulong> GodModes { get; set; }
 
@@ -50,8 +46,8 @@ namespace Alpalis.AdminManager.Services
             m_Logger.LogDebug(string.Format("The player {0} ({1}) enabled GodMode.",
                 sPlayer.playerID.characterName, steamID));
             GodModes.Add(steamID.m_SteamID);
-            m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
-                m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey);
+            //m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
+            //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey);
         }
 
         public async UniTask DisableGodMode(SteamPlayer sPlayer)
@@ -61,8 +57,8 @@ namespace Alpalis.AdminManager.Services
             m_Logger.LogDebug(string.Format("The player {0} ({1}) disabled GodMode.",
                 sPlayer.playerID.characterName, steamID));
             GodModes.Remove(steamID.m_SteamID);
-            m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
-                m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey, "GodMode", 750);
+            //m_UIManager.StopSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
+            //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey, "GodMode", 750);
         }
 
         public bool IsInGodMode(CSteamID steamID)

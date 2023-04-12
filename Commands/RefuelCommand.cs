@@ -1,10 +1,7 @@
 ﻿using Alpalis.AdminManager.API;
-using Alpalis.AdminManager.Models;
-using Alpalis.UtilityServices.API;
 using Cysharp.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using OpenMod.API.Commands;
-using OpenMod.API.Plugins;
 using OpenMod.Core.Commands;
 using OpenMod.Unturned.Commands;
 using OpenMod.Unturned.Users;
@@ -13,44 +10,31 @@ using System;
 
 namespace Alpalis.AdminManager.Commands
 {
-    #region Commad Parameters
     [Command("refuel")]
-    [CommandDescription("Command to refuel the object you're looking at or current vehicle.")]
+    [CommandDescription("Allows to refuel the object you're looking at or current vehicle.")]
     [CommandActor(typeof(UnturnedUser))]
-    #endregion Command Parameters
     public class RefuelCommand : UnturnedCommand
     {
-        #region Member Variables
         private readonly IAdminSystem m_AdminSystem;
         private readonly IStringLocalizer m_StringLocalizer;
-        private readonly IConfigurationManager m_ConfigurationManager;
-        private readonly Main m_Plugin;
-        #endregion Member Variables
 
-        #region Class Constructor
         public RefuelCommand(
             IAdminSystem adminSystem,
             IStringLocalizer StringLocalizer,
-            IConfigurationManager configurationManager,
-            IPluginAccessor<Main> plugin,
             IServiceProvider serviceProvider) : base(serviceProvider)
         {
             m_AdminSystem = adminSystem;
             m_StringLocalizer = StringLocalizer;
-            m_ConfigurationManager = configurationManager;
-            m_Plugin = plugin.Instance!;
         }
-        #endregion Class Constructor
 
         protected override async UniTask OnExecuteAsync()
         {
             if (Context.Parameters.Count != 0)
                 throw new CommandWrongUsageException(Context);
-            Config config = m_ConfigurationManager.GetConfig<Config>(m_Plugin);
             UnturnedUser user = (UnturnedUser)Context.Actor;
             if (!m_AdminSystem.IsInAdminMode(user))
                 throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                      m_StringLocalizer["refuel_command:error_adminmode"]));
             await UniTask.SwitchToMainThread();
             InteractableVehicle currentVehicle = user.Player.Player.movement.getVehicle();
@@ -58,9 +42,9 @@ namespace Alpalis.AdminManager.Commands
             {
                 if (!RefuelVehicle(currentVehicle))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                      m_StringLocalizer["refuel_command:error_fuel:vehicle", new { Vehicle = currentVehicle.name }]));
-                PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : ""),
+                PrintAsync(string.Format("{0}{1}", m_StringLocalizer["refuel_command:prefix"],
                     m_StringLocalizer["refuel_command:succeed:vehicle:current", new { Vehicle = currentVehicle.name }]));
                 return;
             }
@@ -70,15 +54,15 @@ namespace Alpalis.AdminManager.Commands
             {
                 if (!RefuelVehicle(raycast.vehicle))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                      m_StringLocalizer["refuel_command:error_fuel:vehicle", new { Vehicle = raycast.vehicle.name }]));
-                PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : ""),
+                PrintAsync(string.Format("{0}{1}", m_StringLocalizer["refuel_command:prefix"],
                     m_StringLocalizer["refuel_command:succeed:vehicle:looking_at", new { Vehicle = raycast.vehicle.name }]));
                 return;
             }
             if (raycast.transform == null)
                 throw new UserFriendlyException(string.Format("{0}{1}",
-                         config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                         m_StringLocalizer["refuel_command:prefix"],
                          m_StringLocalizer["refuel_command:error_null"]));
             Interactable interactable = raycast.transform.GetComponent<Interactable>();
             if (interactable != null)
@@ -87,11 +71,11 @@ namespace Alpalis.AdminManager.Commands
                 {
                     if (!generator.isRefillable)
                         throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                      m_StringLocalizer["refuel_command:error_fuel:object", new { Object = generator.name }]));
                     generator.askFill(generator.capacity);
                     BarricadeManager.sendFuel(raycast.transform, generator.fuel);
-                    PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : ""),
+                    PrintAsync(string.Format("{0}{1}", m_StringLocalizer["refuel_command:prefix"],
                         m_StringLocalizer["refuel_command:succeed:generator", new { Object = generator.name }]));
                     return;
                 }
@@ -99,11 +83,11 @@ namespace Alpalis.AdminManager.Commands
                 {
                     if (!oil.isRefillable)
                         throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                         m_StringLocalizer["refuel_command:error_fuel:object", new { Object = oil.name }]));
                     oil.askFill(oil.capacity);
                     BarricadeManager.sendFuel(raycast.transform, oil.fuel);
-                    PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : ""),
+                    PrintAsync(string.Format("{0}{1}", m_StringLocalizer["refuel_command:prefix"],
                         m_StringLocalizer["refuel_command:succeed:oil", new { Object = oil.name }]));
                     return;
                 }
@@ -111,27 +95,27 @@ namespace Alpalis.AdminManager.Commands
                 {
                     if (!tank.isRefillable)
                         throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                      m_StringLocalizer["refuel_command:error_fuel:object", new { Object = tank.name }]));
                     tank.ServerSetAmount(tank.capacity);
-                    PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : ""),
+                    PrintAsync(string.Format("{0}{1}", m_StringLocalizer["refuel_command:prefix"],
                         m_StringLocalizer["refuel_command:succeed:tank", new { Object = tank.name }]));
                     return;
                 }
-                else if (interactable is InteractableObjectResource { objectAsset: { interactability: EObjectInteractability.FUEL } } @object)
+                else if (interactable is InteractableObjectResource { objectAsset.interactability: EObjectInteractability.FUEL } @object)
                 {
                     if (!@object.isRefillable)
                         throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                      m_StringLocalizer["refuel_command:error_fuel:object", new { Object = @object.name }]));
                     ObjectManager.updateObjectResource(interactable.transform, @object.capacity, true);
-                    PrintAsync(string.Format("{0}{1}", (config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : ""),
+                    PrintAsync(string.Format("{0}{1}", m_StringLocalizer["refuel_command:prefix"],
                         m_StringLocalizer["refuel_command:succeed:object", new { Object = @object.name }]));
                     return;
                 }
             }
             throw new UserFriendlyException(string.Format("{0}{1}",
-                     config.MessagePrefix ? m_StringLocalizer["refuel_command:prefix"] : "",
+                     m_StringLocalizer["refuel_command:prefix"],
                      m_StringLocalizer["refuel_command:error_null"]));
         }
 
@@ -143,6 +127,5 @@ namespace Alpalis.AdminManager.Commands
             VehicleManager.sendVehicleFuel(vehicle, vehicle.fuel);
             return true;
         }
-
     }
 }

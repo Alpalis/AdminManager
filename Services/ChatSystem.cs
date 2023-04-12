@@ -9,12 +9,10 @@ namespace Alpalis.AdminManager.Services
     [ServiceImplementation(Lifetime = ServiceLifetime.Singleton)]
     public class ChatSystem : IChatSystem
     {
-        #region Class Constructor
         public ChatSystem()
         {
             ChatDisabled = false;
         }
-        #endregion Class Constructor
 
         private bool ChatDisabled { get; set; }
 
@@ -40,6 +38,7 @@ namespace Alpalis.AdminManager.Services
 
         public bool IsChatDisabled() => ChatDisabled;
 
+        // Add muting
         public bool IsMuted(CSteamID steamID) => false;
     }
 }

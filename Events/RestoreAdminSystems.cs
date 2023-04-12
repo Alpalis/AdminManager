@@ -16,7 +16,6 @@ namespace Alpalis.AdminManager.Events
 {
     public class RestoreAdminSystems : IEventListener<UnturnedPlayerConnectedEvent>
     {
-        #region Member Variables
         private readonly IAdminSystem m_AdminSystem;
         private readonly IVanishSystem m_VanishSystem;
         private readonly IGodSystem m_GodSystem;
@@ -26,9 +25,7 @@ namespace Alpalis.AdminManager.Events
         private readonly Main m_Plugin;
         private readonly IStringLocalizer m_StringLocalizer;
         private readonly ILogger<RestoreAdminSystems> m_Logger;
-        #endregion Member Variables
 
-        #region Class Constructor
         public RestoreAdminSystems(
             IAdminSystem adminSystem,
             IVanishSystem vanishSystem,
@@ -50,7 +47,6 @@ namespace Alpalis.AdminManager.Events
             m_StringLocalizer = stringLocalizer;
             m_Logger = logger;
         }
-        #endregion Class Constructor
 
         [EventListener(Priority = EventListenerPriority.Normal)]
         public async Task HandleEventAsync(object? sender, UnturnedPlayerConnectedEvent @event)
@@ -59,10 +55,10 @@ namespace Alpalis.AdminManager.Events
             CSteamID steamID = @event.Player.SteamId;
             if (m_AdminSystem.IsInAdminMode(steamID))
             {
-                m_Logger.LogDebug(string.Format("AdminMode has been restored for the player {0} ({1}).",
+                m_Logger.LogDebug(string.Format("Adminmode has been restored for the player {0} ({1})",
                     sPlayer.playerID.characterName, steamID));
-                m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIID,
-                    m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIKey);
+                //m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIID,
+                //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).AdminUIKey);
                 ChatManager.serverSendMessage(string.Format("{0}{1}", m_StringLocalizer["modes:prefix"],
                     m_StringLocalizer["modes:recover:adminmode"]),
                     Color.DarkRed.ToUnityColor(),
@@ -71,10 +67,10 @@ namespace Alpalis.AdminManager.Events
 
             if (m_VanishSystem.IsInVanishMode(steamID))
             {
-                m_Logger.LogDebug(string.Format("VanishMode has been restored for the player {0} ({1}).",
+                m_Logger.LogDebug(string.Format("Vanishmode has been restored for the player {0} ({1})",
                     sPlayer.playerID.characterName, steamID));
-                m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
-                    m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey);
+                //m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIID,
+                //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).VanishUIKey);
                 sPlayer.player.movement.canAddSimulationResultsToUpdates = false;
                 ChatManager.serverSendMessage(string.Format("{0}{1}", m_StringLocalizer["modes:prefix"],
                     m_StringLocalizer["modes:recover:vanishmode"]),
@@ -84,10 +80,10 @@ namespace Alpalis.AdminManager.Events
 
             if (m_GodSystem.IsInGodMode(steamID))
             {
-                m_Logger.LogDebug(string.Format("GodMode has been restored for the player {0} ({1}).",
+                m_Logger.LogDebug(string.Format("Godmode has been restored for the player {0} ({1})",
                     sPlayer.playerID.characterName, steamID));
-                m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
-                    m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey);
+                //m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIID,
+                //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey);
                 ChatManager.serverSendMessage(string.Format("{0}{1}", m_StringLocalizer["modes:prefix"],
                     m_StringLocalizer["modes:recover:godmode"]),
                     Color.DarkRed.ToUnityColor(),
@@ -96,11 +92,11 @@ namespace Alpalis.AdminManager.Events
 
             if (m_FlySystem.IsInFlyMode(steamID))
             {
-                m_Logger.LogDebug(string.Format("FlyMode has been restored for the player {0} ({1}).",
+                m_Logger.LogDebug(string.Format("Flymode has been restored for the player {0} ({1})",
                     sPlayer.playerID.characterName, steamID));
                 sPlayer.player.movement.sendPluginGravityMultiplier(0);
-                m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).FlyUIID,
-                    m_ConfigurationManager.GetConfig<Config>(m_Plugin).FlyUIKey);
+                //m_UIManager.RunSideUI(sPlayer, m_ConfigurationManager.GetConfig<Config>(m_Plugin).FlyUIID,
+                //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).FlyUIKey);
                 ChatManager.serverSendMessage(string.Format("{0}{1}", m_StringLocalizer["modes:prefix"],
                     m_StringLocalizer["modes:recover:flymode"]),
                     Color.DarkRed.ToUnityColor(),

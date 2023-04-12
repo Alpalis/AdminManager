@@ -1,5 +1,5 @@
 ﻿using Alpalis.AdminManager.API;
-using Alpalis.UtilityServices.Events;
+using Alpalis.UtilityServices.API.Events;
 using OpenMod.API.Eventing;
 using OpenMod.Core.Eventing;
 using Steamworks;
@@ -9,17 +9,13 @@ namespace Alpalis.AdminManager.Events
 {
     public class OnAdminModeCheck : IEventListener<AdminModeEvent>
     {
-        #region Member Variables
         private readonly IAdminSystem m_AdminSystem;
-        #endregion Member Variables
 
-        #region Class Constructor
         public OnAdminModeCheck(
             IAdminSystem adminSystem)
         {
             m_AdminSystem = adminSystem;
         }
-        #endregion Class Constructor
 
         [EventListener(Priority = EventListenerPriority.Normal)]
         public async Task HandleEventAsync(object? sender, AdminModeEvent @event)
