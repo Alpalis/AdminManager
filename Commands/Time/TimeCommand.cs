@@ -8,7 +8,7 @@ using OpenMod.Unturned.Users;
 using SDG.Unturned;
 using System;
 
-namespace Alpalis.AdminManager.Commands
+namespace Alpalis.AdminManager.Commands.Time
 {
     public class TimeCommand
     {

@@ -12,7 +12,6 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Alpalis.AdminManager.Commands
 {
@@ -203,7 +202,7 @@ namespace Alpalis.AdminManager.Commands
                 foreach (RegionCoordinate region in regions)
                 {
                     ItemRegion itemRegion = ItemManager.regions[region.x, region.y];
-                    itemRegion.lastRespawn = Time.realtimeSinceStartup;
+                    itemRegion.lastRespawn = UnityEngine.Time.realtimeSinceStartup;
                     amount += itemRegion.items.Count;
                     ItemManager.askClearRegionItems(region.x, region.y);
                 }

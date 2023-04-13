@@ -637,6 +637,14 @@ time_command:
         error_maxtime: "Time must be less than 3600!"
         # Placeholders: {Time}
         succeed: "You have set overworld time to {Time}."
+day_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    succeed: "You have set time to day."
+night_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    succeed: "You have set time to night."
 weather_command:
     prefix: "<color=#630000>| AdminManager |</color> "
     error_adminmode: "You cannot do this without adminmode enabled!"
