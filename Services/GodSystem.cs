@@ -52,17 +52,9 @@ namespace Alpalis.AdminManager.Services
             //    m_ConfigurationManager.GetConfig<Config>(m_Plugin).GodUIKey, "GodMode", 750);
         }
 
-        public bool IsInGodMode(CSteamID steamID)
-        {
-            if (GodModes.Contains(steamID.m_SteamID))
-                return true;
-            return false;
-        }
+        public bool IsInGodMode(CSteamID steamID) => GodModes.Contains(steamID.m_SteamID);
 
-        private bool OnStatUpdating(PlayerLife player)
-        {
-            return IsInGodMode(player.channel.owner.playerID.steamID);
-        }
+        private bool OnStatUpdating(PlayerLife player) => IsInGodMode(player.channel.owner.playerID.steamID);
 
         public void Dispose()
         {

@@ -77,13 +77,13 @@ namespace Alpalis.AdminManager.Services
         public bool IsInAdminMode(CSteamID steamID)
         {
             Config config = m_ConfigurationManager.GetConfig<Config>(m_Plugin);
-            return config.DisableAdminMode ? true : AdminModes.Contains(steamID.m_SteamID);
+            return config.DisableAdminMode || AdminModes.Contains(steamID.m_SteamID);
         }
 
         public bool IsInAdminMode(ICommandActor actor)
         {
             Config config = m_ConfigurationManager.GetConfig<Config>(m_Plugin);
-            return config.DisableAdminMode ? true : actor.GetType() != typeof(UnturnedUser) ? true : IsInAdminMode(((UnturnedUser)actor).SteamId);
+            return config.DisableAdminMode || actor.GetType() != typeof(UnturnedUser) || IsInAdminMode(((UnturnedUser)actor).SteamId);
         }
     }
 }

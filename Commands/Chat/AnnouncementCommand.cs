@@ -13,10 +13,10 @@ using System.Drawing;
 
 namespace Alpalis.AdminManager.Commands.Chat
 {
-    public class AnnoucementCommand
+    public class AnnouncementCommand
     {
-        [Command("annoucement")]
-        [CommandDescription("Allows to send annoucements.")]
+        [Command("announcement")]
+        [CommandDescription("Allows to send announcements.")]
         [CommandSyntax("<message>")]
         [CommandActor(typeof(ConsoleActor))]
         public class Console : UnturnedCommand
@@ -35,17 +35,17 @@ namespace Alpalis.AdminManager.Commands.Chat
                 if (Context.Parameters.Count == 0)
                     throw new CommandWrongUsageException(Context);
                 string message = string.Join(" ", Context.Parameters).Replace("</Color>", "").Replace("<color=", "");
-                if (message == "") throw new UserFriendlyException(m_StringLocalizer["annoucement_command:error_null_message"]);
+                if (message == "") throw new UserFriendlyException(m_StringLocalizer["announcement_command:error_null_message"]);
                 await UniTask.SwitchToMainThread();
                 ChatManager.serverSendMessage(string.Format("{0}{1}",
-                         m_StringLocalizer["annoucement_command:prefix"],
+                         m_StringLocalizer["announcement_command:prefix"],
                          message), Color.White.ToUnityColor(), null, null, EChatMode.GLOBAL, null, true);
-                PrintAsync(m_StringLocalizer["annoucement_command:succeed:executor"]);
+                PrintAsync(m_StringLocalizer["announcement_command:succeed"]);
             }
         }
 
-        [Command("annoucement")]
-        [CommandDescription("Send annoucements.")]
+        [Command("announcement")]
+        [CommandDescription("Send announcements.")]
         [CommandSyntax("<message>")]
         [CommandActor(typeof(UnturnedUser))]
         public class Unturned : UnturnedCommand
@@ -69,17 +69,17 @@ namespace Alpalis.AdminManager.Commands.Chat
                 UnturnedUser user = (UnturnedUser)Context.Actor;
                 if (!m_AdminSystem.IsInAdminMode(user))
                     throw new UserFriendlyException(string.Format("{0}{1}",
-                         m_StringLocalizer["annoucement_command:prefix"],
-                         m_StringLocalizer["annoucement_command:error_adminmode"]));
+                         m_StringLocalizer["announcement_command:prefix"],
+                         m_StringLocalizer["announcement_command:error_adminmode"]));
                 string message = string.Join(" ", Context.Parameters).Replace("</Color>", "").Replace("<color=", "");
-                if (message == "") throw new UserFriendlyException(m_StringLocalizer["annoucement_command:error_null_message"]);
+                if (message == "") throw new UserFriendlyException(m_StringLocalizer["annonucement_command:error_null_message"]);
                 await UniTask.SwitchToMainThread();
                 ChatManager.serverSendMessage(string.Format("{0}{1}",
-                         m_StringLocalizer["annoucement_command:prefix"],
+                         m_StringLocalizer["announcement_command:prefix"],
                          message), Color.White.ToUnityColor(), null, null, EChatMode.GLOBAL, null, true);
                 PrintAsync(string.Format("{0}{1}",
-                         m_StringLocalizer["annoucement_command:prefix"],
-                         m_StringLocalizer["annoucement_command:succeed:executor"]));
+                         m_StringLocalizer["announcement_command:prefix"],
+                         m_StringLocalizer["announcement_command:succeed"]));
             }
         }
     }

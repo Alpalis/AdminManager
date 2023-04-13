@@ -19,6 +19,7 @@ namespace Alpalis.AdminManager.Commands
     {
         [Command("item")]
         [CommandAlias("i")]
+        [CommandAlias("give")]
         [CommandSyntax("<item> [amount] [player]")]
         [CommandDescription("Gives you or somebody items.")]
         [CommandActor(typeof(UnturnedUser))]
@@ -121,6 +122,7 @@ namespace Alpalis.AdminManager.Commands
 
         [Command("item")]
         [CommandAlias("i")]
+        [CommandAlias("give")]
         [CommandSyntax("<item> <amount> <player>")]
         [CommandDescription("Gives you or somebody items.")]
         [CommandActor(typeof(ConsoleActor))]

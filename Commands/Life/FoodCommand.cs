@@ -88,7 +88,7 @@ namespace Alpalis.AdminManager.Commands.Life
 
         [Command("food")]
         [CommandSyntax("<player>")]
-        [CommandDescription("Allows to set max value of somebody's foodbar.")]
+        [CommandDescription("Allows to set max value of somebody's food.")]
         [CommandActor(typeof(ConsoleActor))]
         public class Console : UnturnedCommand
         {

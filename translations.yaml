@@ -123,6 +123,11 @@ fly_command:
         yourself:
             enabled: "You have enabled flymode."
             disabled: "You have disabled flymode."
+announcement_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    error_null_message: "Message cannot be empty!"
+    succeed: "You have successfully sent a announcement."
 food_command:
     prefix: "<color=#630000>| AdminManager |</color> "
     error_player: "There is no such player on the server!"
@@ -637,6 +642,11 @@ time_command:
         error_maxtime: "Time must be less than 3600!"
         # Placeholders: {Time}
         succeed: "You have set overworld time to {Time}."
+cycle_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    error_lenght: "You have entered an incorrect lenght of the day/night cycle."
+    succeed: "You have changed day/night cycle lenght."
 day_command:
     prefix: "<color=#630000>| AdminManager |</color> "
     error_adminmode: "You cannot do this without adminmode enabled!"

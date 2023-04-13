@@ -68,11 +68,6 @@ namespace Alpalis.AdminManager.Services
             sPlayer.player.movement.sendPluginGravityMultiplier(sPlayer.player.movement.speed * -0.1f);
         }
 
-        public bool IsInFlyMode(CSteamID steamID)
-        {
-            if (FlyModes.Contains(steamID.m_SteamID))
-                return true;
-            return false;
-        }
+        public bool IsInFlyMode(CSteamID steamID) => FlyModes.Contains(steamID.m_SteamID);
     }
 }
