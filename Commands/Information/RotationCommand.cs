@@ -44,13 +44,15 @@ namespace Alpalis.AdminManager.Commands.Information
                          m_StringLocalizer["rotation_command:error_adminmode"]));
                 if (Context.Parameters.Count == 0)
                 {
-                    PrintAsync(m_StringLocalizer["rotation_command:succeed:yourself", new
+                    PrintAsync(string.Format("{0}{1}",
+                         m_StringLocalizer["rotation_command:prefix"],
+                         m_StringLocalizer["rotation_command:succeed:yourself", new
                     {
                         user.Player.Transform.Rotation.X,
                         user.Player.Transform.Rotation.Y,
                         user.Player.Transform.Rotation.Z,
                         user.Player.Transform.Rotation.W
-                    }]);
+                    }]));
                     return;
                 }
                 if (Context.Parameters.Count != 1)

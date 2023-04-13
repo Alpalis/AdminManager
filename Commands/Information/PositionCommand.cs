@@ -44,12 +44,14 @@ namespace Alpalis.AdminManager.Commands.Information
                          m_StringLocalizer["position_command:error_adminmode"]));
                 if (Context.Parameters.Count == 0)
                 {
-                    PrintAsync(m_StringLocalizer["position_command:succeed:yourself", new
+                    PrintAsync(string.Format("{0}{1}",
+                         m_StringLocalizer["position_command:prefix"],
+                         m_StringLocalizer["position_command:succeed:yourself", new
                     {
                         user.Player.Transform.Position.X,
                         user.Player.Transform.Position.Y,
                         user.Player.Transform.Position.Z
-                    }]);
+                    }]));
                     return;
                 }
                 if (Context.Parameters.Count != 1)

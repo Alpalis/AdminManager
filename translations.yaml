@@ -231,6 +231,14 @@ gravity_command:
         executor: "You have changed {PlayerName}'s gravity multipler to {Multipler}."
     # Placeholders: {Multipler}
     yourself: "You have changed your gravity multipler to {Multipler}."
+ping_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_player: "There is no such player on the server!"
+    succeed:
+        # Placeholders: {Ping}
+        yourself: "Your ping: {Ping}ms"
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {Ping}
+        somebody: "{PlayerName}'s ping: {Ping}ms"
 tps_command:
     prefix: "<color=#630000>| AdminManager |</color> "
     # Placeholders: {TPS}
