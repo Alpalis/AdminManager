@@ -150,6 +150,12 @@ water_command:
         # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}
         executor: "You have maxed out water of {PlayerName}."
     yourself: "You have maxed out your water."
+sudo_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_player: "There is no such player on the server!"
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    error_message: "You have entered an incorrect message/command!"
+    succeed: "You have sent a request to force player to send message or command."
 join_command:
     prefix: "<color=#630000>| AdminManager |</color> "
     error_ip: "You have entered an incorrect IP!"
@@ -682,6 +688,12 @@ chat_message:
     prefix: "<color=#630000>| AdminManager |</color> "
     chat_disabled: "You cannot send a message because chat is disabled!"
     muted: "You cannot send a message because you are muted!"
+explode_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    error_radius: "You have entered an incorrect radius!"
+    error_damage: "You have entered an incorrect time!"
+    succeed: "Are you pleased with yourself now?"
 modes:
     prefix: "<color=#630000>| AdminManager |</color> "
     recover:
