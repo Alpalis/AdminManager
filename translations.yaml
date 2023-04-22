@@ -465,6 +465,29 @@ reputation_command:
                 player: "{PlayerName} set your reputation to {Reputation}."
                 # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {Reputation}
                 executor: "You have set {PlayerName}'s reputation to {Reputation}."
+flag_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_player: "There is no such player on the server!"
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    error_flag: "You have entered an incorrect flag!"
+    error_value: "You have entered an incorrect flag value!"
+    error_flag_missing: "Player don't have such flag set up!"
+    get:
+        # Placeholders: {Flag}, {Value}
+        yourself: "Your flag {Flag} is {Value}."
+        # Placeholders: {Flag}, {Value}, {SteamID}, {CharacterName}, {NickName}, {PlayerName}
+        somebody: "{PlayerName}'s flag {Flag} is {Value}."
+    set:
+        succeed:
+            # Placeholders: {Flag}, {Value}
+            yourself: "You have set your flag {Flag} to {Value}."
+            somebody:
+                # Placeholders: {Flag}, {Value}
+                console: "The console set your flag {Flag} to {Value}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {Flag}, {Value}
+                player: "{PlayerName} set your flag {Flag} to {Value}."
+                # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {Flag}, {Value}
+                executor: "You have set {PlayerName}'s flag {Flag} to {Value}."
 maxskills_command:
     prefix: "<color=#630000>| AdminManager |</color> "
     error_player: "There is no such player on the server!"
