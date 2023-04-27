@@ -77,7 +77,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                     await UniTask.SwitchToMainThread();
                     PrintAsync(string.Format("{0}{1}", m_StringLocalizer["adminmode_command:prefix"],
                         m_StringLocalizer[string.Format("adminmode_command:switch:yourself:{0}",
-                        m_AdminSystem.ToggleAdminMode(user.Player.SteamPlayer) ? "enabled" : "disabled")]));
+                        await m_AdminSystem.ToggleAdminMode(user) ? "enabled" : "disabled")]));
                     return;
                 }
                 if (Context.Parameters.Count != 1)
@@ -97,7 +97,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
                 await UniTask.SwitchToMainThread();
-                bool result = m_AdminSystem.ToggleAdminMode(targetUser.Player.SteamPlayer);
+                bool result = await m_AdminSystem.ToggleAdminMode(targetUser);
                 targetUser.PrintMessageAsync(string.Format("{0}{1}", m_StringLocalizer["adminmode_command:prefix"],
                     m_StringLocalizer[string.Format("adminmode_command:switch:somebody:player:{0}",
                     result ? "enabled" : "disabled"), new
@@ -158,7 +158,7 @@ namespace Alpalis.AdminManager.Commands.Modes
                         m_StringLocalizer["adminmode_command:prefix"],
                         m_StringLocalizer["adminmode_command:error_player"]));
                 await UniTask.SwitchToMainThread();
-                bool result = m_AdminSystem.ToggleAdminMode(user.Player.SteamPlayer);
+                bool result = await m_AdminSystem.ToggleAdminMode(user);
                 user.PrintMessageAsync(string.Format("{0}{1}", m_StringLocalizer["adminmode_command:prefix"],
                     m_StringLocalizer[string.Format("adminmode_command:switch:somebody:console:{0}",
                     result ? "enabled" : "disabled")]));

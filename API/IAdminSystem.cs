@@ -1,7 +1,9 @@
 ﻿using OpenMod.API.Commands;
 using OpenMod.API.Ioc;
+using OpenMod.Unturned.Users;
 using SDG.Unturned;
 using Steamworks;
+using System.Threading.Tasks;
 
 namespace Alpalis.AdminManager.API
 {
@@ -14,9 +16,9 @@ namespace Alpalis.AdminManager.API
         /// <summary>
         /// Sets the state of the player's admin mode.
         /// </summary>
-        /// <param name="sPlayer">SteamPlayer</param>
+        /// <param name="user">Unturned user</param>
         /// <returns>Returns true if the player is in admin mode and false if not.</returns>
-        bool ToggleAdminMode(SteamPlayer sPlayer);
+        Task<bool> ToggleAdminMode(UnturnedUser user);
 
         #region IsInAdminMode
         /// <summary>
@@ -33,5 +35,11 @@ namespace Alpalis.AdminManager.API
         /// <returns>Returns true if the player is in admin mode and false if not.</returns>
         bool IsInAdminMode(ICommandActor actor);
         #endregion IsInAdminMode
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        bool IsAdminModeDisabled();
     }
 }

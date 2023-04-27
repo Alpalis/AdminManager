@@ -488,6 +488,48 @@ flag_command:
                 player: "{PlayerName} set your flag {Flag} to {Value}."
                 # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {Flag}, {Value}
                 executor: "You have set {PlayerName}'s flag {Flag} to {Value}."
+kick_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_player: "There is no such player on the server!"
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    default_reason:
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}
+        player: "by {PlayerName}"
+        console: "by the console"
+    # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}
+    succeed: "You have successfully kicked {PlayerName}."
+ban_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_player: "There is no such player on the server!"
+    error_steamid: "You have entered an incorrect steamID!"
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    default_reason:
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}
+        player: "by {PlayerName}"
+        console: "by the console"
+    succeed:
+        # Placeholders: {SteamID}
+        steamid: "You have successfully banned {SteamID}."
+        # Placeholders: {SteamID}, {CharacterName}, {NickName}, {PlayerName}, {IP}, {HWIDs}
+        player: "You have successfully banned {PlayerName} (SteamID) with IP: {IP} and HWIDs {HWIDs}."
+unban_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_steamid: "You have entered an incorrect steamID!"
+    error_null: "There is no ban registered with this steamID!"
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    # Placeholders: {SteamID}
+    succeed: "You have successfully unbanned {SteamID}."
+bans_command:
+    prefix: "<color=#630000>| AdminManager |</color> "
+    error_adminmode: "You cannot do this without adminmode enabled!"
+    succeed:
+        title: "Bans:"
+        empty: "There are no bans!"
+        list:
+            # Placeholders: {SteamID}, {IP}, {Time}, {Duration}, {Reason}, {HWIDs}
+            console: "- Caller: Console | Banned: {SteamID}, IP: {IP}, Time: {Time}, Duration: {Duration}, Reason: \"{Reason}\", HWIDs: {HWIDs}"
+            # Placeholders: {CallerID}, {SteamID}, {IP}, {Time}, {Duration}, {Reason}, {HWIDs}
+            player: "- Caller: {CallerID} | Banned: {SteamID}, IP: {IP}, Time: {Time}, Duration: {Duration}, Reason: \"{Reason}\", HWIDs: {HWIDs}"
 maxskills_command:
     prefix: "<color=#630000>| AdminManager |</color> "
     error_player: "There is no such player on the server!"

@@ -39,6 +39,9 @@ namespace Alpalis.AdminManager
             m_Harmony.PatchAll();
 
             m_PermissionRegistry.RegisterPermission(this, "chatoverride", "Allows to write on chat even when chat is disabled or you are muted.");
+            m_PermissionRegistry.RegisterPermission(this, "freecam", "Allows to enable free cam.");
+            m_PermissionRegistry.RegisterPermission(this, "specstats", "Allows to enable spectating stats.");
+            m_PermissionRegistry.RegisterPermission(this, "workzone", "Allows to enable workzone.");
 
             await m_ConfigurationManager.LoadConfigAsync<Config>(this);
 
