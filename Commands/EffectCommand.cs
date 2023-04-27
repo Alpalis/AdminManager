@@ -8,7 +8,7 @@ using System;
 
 namespace Alpalis.AdminManager.Commands
 {
-    /*public class EffectCommand
+    public class EffectCommand
     {
         [Command("effect")]
         [CommandAlias("eff")]
@@ -35,5 +35,5 @@ namespace Alpalis.AdminManager.Commands
         public class EffectConsole
         {
         }
-    }*/
+    }
 }
