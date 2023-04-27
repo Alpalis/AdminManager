@@ -12,9 +12,11 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 
+// merge with effect
+
 namespace Alpalis.AdminManager.Commands
 {
-    public class UIEffectCommand
+    /*public class UIEffectCommand
     {
         [Command("effectui")]
         [CommandAlias("effui")]
@@ -151,5 +153,5 @@ namespace Alpalis.AdminManager.Commands
                 }]);
             }
         }
-    }
+    }*/
 }
