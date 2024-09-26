@@ -73,7 +73,7 @@ public sealed class TeleportCommand
                     m_StringLocalizer["teleport_command:prefix"],
                     m_StringLocalizer["teleport_command:somebody:succeed:console:place", new
                     {
-                        Location = outNode.name
+                        Location = outNode.locationName
                     }]));
                 SteamPlayer sPlayer = user.Player.SteamPlayer;
                 CSteamID steamID = sPlayer.playerID.steamID;
@@ -83,7 +83,7 @@ public sealed class TeleportCommand
                     CharacterName = sPlayer.playerID.characterName,
                     NickName = sPlayer.playerID.nickName,
                     SteamID = steamID,
-                    Location = outNode.name
+                    Location = outNode.locationName
                 }]);
                 return;
             }
@@ -158,7 +158,7 @@ public sealed class TeleportCommand
                             m_StringLocalizer["teleport_command:prefix"],
                             m_StringLocalizer["teleport_command:yourself:succeed:place", new
                             {
-                                Location = outNode.name
+                                Location = outNode.locationName
                             }]));
                         return;
                     }
@@ -259,7 +259,7 @@ public sealed class TeleportCommand
                             CharacterName = sPlayer.playerID.characterName,
                             NickName = sPlayer.playerID.nickName,
                             SteamID = steamID,
-                            Location = outNode.name
+                            Location = outNode.locationName
                         }]));
                     await PrintAsync(string.Format("{0}{1}",
                         m_StringLocalizer["teleport_command:prefix"],
@@ -269,7 +269,7 @@ public sealed class TeleportCommand
                             CharacterName = sPlayer.playerID.characterName,
                             NickName = sPlayer.playerID.nickName,
                             SteamID = steamID,
-                            Location = outNode.name
+                            Location = outNode.locationName
                         }]));
                     return;
                 }
