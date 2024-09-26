@@ -1,37 +1,34 @@
 ﻿using OpenMod.API.Ioc;
 using Steamworks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Alpalis.AdminManager.API
+namespace Alpalis.AdminManager.API;
+
+/// <summary>
+/// Service for managing chat system.
+/// </summary>
+[Service]
+public interface IChatSystem
 {
-    [Service]
-    public interface IChatSystem
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        bool EnableChat();
+    /// <summary>
+    /// Enables writing on chat.
+    /// </summary>
+    bool EnableChat();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        bool DisableChat();
+    /// <summary>
+    /// Disables writing on chat.
+    /// </summary>
+    bool DisableChat();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        bool IsChatDisabled();
+    /// <summary>
+    /// Checks if chat is disabled.
+    /// </summary>
+    /// <returns>Returns true if chat is disabled, otherwise false.</returns>
+    bool IsChatDisabled();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="steamID"></param>
-        /// <returns></returns>
-        bool IsMuted(CSteamID steamID);
-    }
+    /// <summary>
+    /// Checks if user is muted.
+    /// </summary>
+    /// <param name="steamID">StreamID of the player.</param>
+    /// <returns>Returns true if player is muted, otherwise false.</returns>
+    bool IsMuted(CSteamID steamID);
 }

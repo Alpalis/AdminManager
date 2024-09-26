@@ -1,17 +1,24 @@
-﻿<Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net461</TargetFramework>
-		<PackageLicenseExpression>EUPL-1.2</PackageLicenseExpression>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Nullable>enable</Nullable>
+		<WarningsAsErrors>nullable</WarningsAsErrors>
+		<NoWarn>$(NoWarn);NU1701;NU1702;CS0436;NU1605;MSB3270</NoWarn>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
 		<PackageTags>openmod openmod-plugin unturned</PackageTags>
 		<RootNamespace>Alpalis.AdminManager</RootNamespace>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<GenerateNugetPackage>true</GenerateNugetPackage>
+		<AssemblyName>Alpalis.AdminManager</AssemblyName>
 		<Product>Alpalis AdminManager Plugin</Product>
 		<Authors>Pandetthe</Authors>
 		<Version>1.0.1</Version>
 		<InformationalVersion>1.0.1</InformationalVersion>
 		<PackageVersion>1.0.1</PackageVersion>
-		<AssemblyName>Alpalis.AdminManager</AssemblyName>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/Alpalis/AdminManager</RepositoryUrl>
+		<PackageProjectUrl>https://alpalis.github.io/docs/plugins/adminmanager/about</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,13 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\IdentityManager\IdentityManager.csproj" />
-		<ProjectReference Include="..\UtilityServices\UtilityServices.csproj" />
-	</ItemGroup>
-
-	<Import Project="..\shared.csproj" />
-
-	<ItemGroup>
-	  <PackageReference Update="OpenMod.Unturned" Version="3.7.4" />
+	  <PackageReference Include="Alpalis.UtilityServices" Version="1.1.4" />
+	  <PackageReference Include="OpenMod.Unturned" Version="3.8.10" />
 	</ItemGroup>
 </Project>

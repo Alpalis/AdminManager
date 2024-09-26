@@ -2,24 +2,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace Alpalis.AdminManager.Models
+namespace Alpalis.AdminManager.Models;
+
+/// <summary>
+/// Configuation for AdminManager plugin.
+/// </summary>
+[Serializable]
+public sealed class Config : MainConfig
 {
-    [Serializable]
-    public class Config : MainConfig
-    {
-        public Config()
-        {
-            DisableAdminMode = false;
-        }
+    /// <summary>
+    /// Is admin mode disabled?
+    /// </summary>
+    public bool DisableAdminMode { get; set; } = false;
 
-        public bool DisableAdminMode { get; set; }
-
-        public override List<KeyValuePair<string, string>> GetPropertiesInString()
-        {
-            return new List<KeyValuePair<string, string>>()
-            {
-                new ("DisableAdminMode", $"{DisableAdminMode}")
-            };
-        }
-    }
+    public override List<KeyValuePair<string, string>> GetPropertiesInString() =>
+        [
+            new ("DisableAdminMode", $"{DisableAdminMode}")
+        ];
 }
