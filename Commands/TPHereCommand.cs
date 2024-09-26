@@ -9,62 +9,55 @@ using SDG.Unturned;
 using Steamworks;
 using System;
 
-namespace Alpalis.AdminManager.Commands
+namespace Alpalis.AdminManager.Commands;
+
+[Command("tphere")]
+[CommandDescription("Teleports player to you.")]
+[CommandSyntax("<player>")]
+[CommandActor(typeof(UnturnedUser))]
+public sealed class TPHereCommand(
+    IAdminSystem adminSystem,
+    IStringLocalizer stringLocalizer,
+    IServiceProvider serviceProvider) : UnturnedCommand(serviceProvider)
 {
-    [Command("tphere")]
-    [CommandDescription("Teleports player to you.")]
-    [CommandSyntax("<player>")]
-    [CommandActor(typeof(UnturnedUser))]
-    public class TPHereCommand : UnturnedCommand
+    private readonly IAdminSystem m_AdminSystem = adminSystem;
+    private readonly IStringLocalizer m_StringLocalizer = stringLocalizer;
+
+    protected override async UniTask OnExecuteAsync()
     {
-        private readonly IAdminSystem m_AdminSystem;
-        private readonly IStringLocalizer m_StringLocalizer;
-
-        public TPHereCommand(
-            IAdminSystem adminSystem,
-            IStringLocalizer stringLocalizer,
-            IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-            m_AdminSystem = adminSystem;
-            m_StringLocalizer = stringLocalizer;
-        }
-
-        protected override async UniTask OnExecuteAsync()
-        {
-            if (Context.Parameters.Count != 1)
-                throw new CommandWrongUsageException(Context);
-            UnturnedUser user = (UnturnedUser)Context.Actor;
-            if (!m_AdminSystem.IsInAdminMode(user))
-                throw new UserFriendlyException(string.Format("{0}{1}",
-                     m_StringLocalizer["tphere_command:prefix"],
-                     m_StringLocalizer["tphere_command:error_adminmode"]));
-            if (!Context.Parameters.TryGet(0, out UnturnedUser? teleportUser) || teleportUser == null)
-                throw new UserFriendlyException(string.Format("{0}{1}",
-                    m_StringLocalizer["tphere_command:prefix"],
-                    m_StringLocalizer["tphere_command:error_player"]));
-            SteamPlayer sPlayer = user.Player.SteamPlayer;
-            CSteamID steamID = sPlayer.playerID.steamID;
-            SteamPlayer teleportSPlayer = teleportUser.Player.SteamPlayer;
-            CSteamID teleportSteamID = teleportSPlayer.playerID.steamID;
-            teleportUser.Player.Player.TeleportToLocationAsync(user.Player.Player.transform.position);
-            teleportUser.PrintMessageAsync(string.Format("{0}{1}",
+        if (Context.Parameters.Count != 1)
+            throw new CommandWrongUsageException(Context);
+        UnturnedUser user = (UnturnedUser)Context.Actor;
+        if (!m_AdminSystem.IsInAdminMode(user))
+            throw new UserFriendlyException(string.Format("{0}{1}",
+                 m_StringLocalizer["tphere_command:prefix"],
+                 m_StringLocalizer["tphere_command:error_adminmode"]));
+        if (!Context.Parameters.TryGet(0, out UnturnedUser? teleportUser) || teleportUser == null)
+            throw new UserFriendlyException(string.Format("{0}{1}",
                 m_StringLocalizer["tphere_command:prefix"],
-                m_StringLocalizer["tphere_command:succeed:player", new
-                {
-                    PlayerName = sPlayer.playerID.playerName,
-                    CharacterName = sPlayer.playerID.characterName,
-                    NickName = sPlayer.playerID.nickName,
-                    SteamID = steamID
-                }]));
-            PrintAsync(string.Format("{0}{1}",
-                m_StringLocalizer["tphere_command:prefix"],
-                m_StringLocalizer["tphere_command:succeed:executor", new
-                {
-                    PlayerName = teleportSPlayer.playerID.playerName,
-                    CharacterName = teleportSPlayer.playerID.characterName,
-                    NickName = teleportSPlayer.playerID.nickName,
-                    SteamID = teleportSteamID
-                }]));
-        }
+                m_StringLocalizer["tphere_command:error_player"]));
+        SteamPlayer sPlayer = user.Player.SteamPlayer;
+        CSteamID steamID = sPlayer.playerID.steamID;
+        SteamPlayer teleportSPlayer = teleportUser.Player.SteamPlayer;
+        CSteamID teleportSteamID = teleportSPlayer.playerID.steamID;
+        await teleportUser.Player.Player.TeleportToLocationAsync(user.Player.Player.transform.position);
+        await teleportUser.PrintMessageAsync(string.Format("{0}{1}",
+            m_StringLocalizer["tphere_command:prefix"],
+            m_StringLocalizer["tphere_command:succeed:player", new
+            {
+                PlayerName = sPlayer.playerID.playerName,
+                CharacterName = sPlayer.playerID.characterName,
+                NickName = sPlayer.playerID.nickName,
+                SteamID = steamID
+            }]));
+        await PrintAsync(string.Format("{0}{1}",
+            m_StringLocalizer["tphere_command:prefix"],
+            m_StringLocalizer["tphere_command:succeed:executor", new
+            {
+                PlayerName = teleportSPlayer.playerID.playerName,
+                CharacterName = teleportSPlayer.playerID.characterName,
+                NickName = teleportSPlayer.playerID.nickName,
+                SteamID = teleportSteamID
+            }]));
     }
 }

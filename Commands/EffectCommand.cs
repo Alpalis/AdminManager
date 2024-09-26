@@ -6,34 +6,29 @@ using OpenMod.Unturned.Users;
 using SDG.Unturned;
 using System;
 
-namespace Alpalis.AdminManager.Commands
+namespace Alpalis.AdminManager.Commands;
+
+public sealed class EffectCommand
 {
-    public class EffectCommand
+    [Command("effect")]
+    [CommandAlias("eff")]
+    [CommandDescription("Spawn an effect on your position")]
+    [CommandSyntax("<id> [player/x] [y] [z]")]
+    [CommandActor(typeof(UnturnedUser))]
+    [RegisterCommandPermission("other", Description = "Allows to spawn offect on somebodys position.")]
+    public sealed class EffectUnturned(
+        IServiceProvider serviceProvider) : UnturnedCommand(serviceProvider)
     {
-        [Command("effect")]
-        [CommandAlias("eff")]
-        [CommandDescription("Spawn an effect on your position")]
-        [CommandSyntax("<id> [player/x] [y] [z]")]
-        [CommandActor(typeof(UnturnedUser))]
-        [RegisterCommandPermission("other", Description = "Allows to spawn offect on somebodys position.")]
-        public class EffectUnturned : UnturnedCommand
+        protected override UniTask OnExecuteAsync()
         {
-            public EffectUnturned(
-                IServiceProvider serviceProvider) : base(serviceProvider)
-            {
-            }
-
-            protected override async UniTask OnExecuteAsync()
-            {
-                // to rework from another repo
-                throw new NotImplementedException();
-                //await UniTask.SwitchToMainThread();
-                //EffectManager.sendUIEffect(29001, 1, ((UnturnedUser)Context.Actor).Player.Player.channel.GetOwnerTransportConnection(), true);
-            }
+            // to rework from another repo
+            throw new NotImplementedException();
+            //await UniTask.SwitchToMainThread();
+            //EffectManager.sendUIEffect(29001, 1, ((UnturnedUser)Context.Actor).Player.Player.channel.GetOwnerTransportConnection(), true);
         }
+    }
 
-        public class EffectConsole
-        {
-        }
+    public class EffectConsole
+    {
     }
 }

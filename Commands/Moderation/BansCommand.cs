@@ -11,67 +11,46 @@ using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Alpalis.AdminManager.Commands.Moderation
+namespace Alpalis.AdminManager.Commands.Moderation;
+
+[Command("bans")]
+[CommandDescription("Displays list of bans.")]
+public sealed class BansCommand(
+    IAdminSystem adminSystem,
+    IStringLocalizer stringLocalizer,
+    IServiceProvider serviceProvider) : UnturnedCommand(serviceProvider)
 {
-    [Command("bans")]
-    [CommandDescription("Displays list of bans.")]
-    public class BansCommand : UnturnedCommand
+    private readonly IAdminSystem m_AdminSystem = adminSystem;
+    private readonly IStringLocalizer m_StringLocalizer = stringLocalizer;
+
+    protected override async UniTask OnExecuteAsync()
     {
-        private readonly IAdminSystem m_AdminSystem;
-        private readonly IStringLocalizer m_StringLocalizer;
-
-        public BansCommand(
-            IAdminSystem adminSystem,
-            IStringLocalizer stringLocalizer,
-            IServiceProvider serviceProvider) : base(serviceProvider)
+        if (Context.Parameters.Length != 0)
+            throw new CommandWrongUsageException(Context);
+        if (!m_AdminSystem.IsInAdminMode(Context.Actor))
+            throw new UserFriendlyException(string.Format("{0}{1}",
+                m_StringLocalizer["bans_command:prefix"],
+                m_StringLocalizer["bans_command:error_adminmode"]));
+        await PrintAsync(string.Format("{0}{1}",
+            Context.Actor.GetType() == typeof(UnturnedUser) ? m_StringLocalizer["bans_command:prefix"] : "", 
+            m_StringLocalizer["bans_command:succeed:title"]));
+        if (SteamBlacklist.list.Count == 0)
         {
-            m_AdminSystem = adminSystem;
-            m_StringLocalizer = stringLocalizer;
+            await PrintAsync(m_StringLocalizer["bans_command:succeed:empty"]);
+            return;
         }
-
-        protected override async UniTask OnExecuteAsync()
+        await UniTask.SwitchToMainThread();
+        foreach (SteamBlacklistID ban in SteamBlacklist.list)
         {
-            if (Context.Parameters.Length != 0)
-                throw new CommandWrongUsageException(Context);
-            if (!m_AdminSystem.IsInAdminMode(Context.Actor))
-                throw new UserFriendlyException(string.Format("{0}{1}",
-                    m_StringLocalizer["bans_command:prefix"],
-                    m_StringLocalizer["bans_command:error_adminmode"]));
-            PrintAsync(string.Format("{0}{1}",
-                Context.Actor.GetType() == typeof(UnturnedUser) ? m_StringLocalizer["bans_command:prefix"] : "", 
-                m_StringLocalizer["bans_command:succeed:title"]));
-            if (SteamBlacklist.list.Count == 0)
+            FieldInfo fieldInfo = typeof(SteamBlacklistID).GetField("hwids", BindingFlags.NonPublic | BindingFlags.Instance);
+            object? value = fieldInfo.GetValue(ban);
+            List<byte[]> hwids = value == null ? [] : [.. ((byte[][])value)];
+            if (ban.judgeID == CSteamID.Nil)
             {
-                PrintAsync(m_StringLocalizer["bans_command:succeed:empty"]);
-                return;
-            }
-            await UniTask.SwitchToMainThread();
-            foreach (SteamBlacklistID ban in SteamBlacklist.list)
-            {
-                FieldInfo fieldInfo = typeof(SteamBlacklistID).GetField("hwids", BindingFlags.NonPublic | BindingFlags.Instance);
-                object? value = fieldInfo.GetValue(ban);
-                List<byte[]> hwids = value == null? new List<byte[]>() : ((byte[][])value).ToList();
-                if (ban.judgeID == CSteamID.Nil)
+                await PrintAsync(m_StringLocalizer["bans_command:succeed:list:console", new
                 {
-                    PrintAsync(m_StringLocalizer["bans_command:succeed:list:console", new
-                    {
-                        SteamID = ban.playerID,
-                        IP = IPAddressHelper.GetIPAddressFromUInt(ban.ip),
-                        Time = DateTimeEx.FromUtcUnixTimeSeconds(ban.banned),
-                        Duration = ban.duration,
-                        Reason = ban.reason,
-                        HWIDs = string.Join(", ", hwids.Select(x => Hash.toString(x)))
-                    }]);
-                    continue;
-                }
-                PrintAsync(m_StringLocalizer["bans_command:succeed:list:player", new
-                {
-                    CallerID = ban.judgeID,
                     SteamID = ban.playerID,
                     IP = IPAddressHelper.GetIPAddressFromUInt(ban.ip),
                     Time = DateTimeEx.FromUtcUnixTimeSeconds(ban.banned),
@@ -79,7 +58,18 @@ namespace Alpalis.AdminManager.Commands.Moderation
                     Reason = ban.reason,
                     HWIDs = string.Join(", ", hwids.Select(x => Hash.toString(x)))
                 }]);
+                continue;
             }
+            await PrintAsync(m_StringLocalizer["bans_command:succeed:list:player", new
+            {
+                CallerID = ban.judgeID,
+                SteamID = ban.playerID,
+                IP = IPAddressHelper.GetIPAddressFromUInt(ban.ip),
+                Time = DateTimeEx.FromUtcUnixTimeSeconds(ban.banned),
+                Duration = ban.duration,
+                Reason = ban.reason,
+                HWIDs = string.Join(", ", hwids.Select(x => Hash.toString(x)))
+            }]);
         }
     }
 }
